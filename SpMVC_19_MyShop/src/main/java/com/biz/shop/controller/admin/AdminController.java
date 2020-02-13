@@ -5,6 +5,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.biz.shop.domain.ProductVO;
+
 @RequestMapping(value = "/admin")
 @Controller
 public class AdminController {
@@ -15,8 +17,11 @@ public class AdminController {
 		
 	}
 	
-	@RequestMapping(value = "/product", method = RequestMethod.GET)
+	// @RequestMapping(value = "/product", method = RequestMethod.GET)
 	public String admin(Model model) {
+
+		
+		
 		model.addAttribute("BODY", "PRODUCT");
 		return "admin/main";
 	}
