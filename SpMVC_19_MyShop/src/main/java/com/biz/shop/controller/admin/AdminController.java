@@ -11,7 +11,7 @@ import com.biz.shop.domain.ProductVO;
 @Controller
 public class AdminController {
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = {"", "/"}, method = RequestMethod.GET)
 	public String main() {
 		return "admin/main";
 		
