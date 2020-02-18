@@ -3,6 +3,8 @@ package com.biz.shop.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Service;
 
 import com.biz.shop.domain.DeptVO;
@@ -18,17 +20,23 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class DeptService {
 	
-	private final DeptDao dDao;
-	
-	public void save(DeptVO deptVO) {
-		DeptVO d = dDao.save(deptVO);
-		log.debug("상품정보 : " + d.toString());
-	}
+	private final DeptDao deptDao;
 	
 	public List<DeptVO> selectAll() {
-		List<DeptVO> deptList = dDao.findAll();
+		List<DeptVO> deptList = deptDao.findAll();
 		return deptList;
 	}
+
+	public DeptVO save(DeptVO deptVO) {
+		DeptVO ret = deptDao.save(deptVO);
+		return ret;
+	}
+	
+	
+	
+	
+	/*
+
 
 	public DeptVO findById(long id) {
 		Optional<DeptVO> deptVO = dDao.findById(id);
@@ -36,8 +44,7 @@ public class DeptService {
 		return deptVO.get();
 	}
 
-	
-	/*
+
 	 * 
 
 

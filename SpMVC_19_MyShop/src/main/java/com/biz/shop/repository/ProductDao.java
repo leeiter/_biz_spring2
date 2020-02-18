@@ -32,7 +32,5 @@ import com.biz.shop.domain.ProductVO;
 public interface ProductDao extends JpaRepository<ProductVO, Long> {
 	
 	// C(R)UD 의 기본 method가 준비되어 있다.
-	
-	
 
 }

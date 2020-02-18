@@ -44,7 +44,6 @@ public class AuthService {
 		userDao.save(userVO);
 		authDao.save(auth);
 		
-		
 	}
 	
 }

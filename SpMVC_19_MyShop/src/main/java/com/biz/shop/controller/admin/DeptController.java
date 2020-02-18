@@ -8,26 +8,59 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
 
 import com.biz.shop.domain.DeptVO;
-import com.biz.shop.domain.ProductVO;
 import com.biz.shop.service.DeptService;
-import com.biz.shop.service.ProductService;
 
 import lombok.RequiredArgsConstructor;
 
-@SessionAttributes("deptVO")
 @RequiredArgsConstructor
 @RequestMapping(value = "/admin/dept")
 @Controller
 public class DeptController {
 	
 	private final DeptService dService;
+	
+	// */admin/dept 로 매핑
+	@RequestMapping(value = {"/", ""}, method = RequestMethod.GET)
+	public String input(Model model) {
+		this.modelMapping(model);
+		
+		DeptVO deptVO = new DeptVO();
+		model.addAttribute("deptVO", deptVO);
+						
+		return "admin/main";
+	}
+	
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public String list(Model model) {
+		this.modelMapping(model);
+		return "admin/dept_list";
+	}
+	
+	@RequestMapping(value = "/input", method = RequestMethod.POST)
+	public String input(@Valid @ModelAttribute DeptVO deptVO, BindingResult result, Model model) {
+		if(result.hasErrors()) {
+			this.modelMapping(model);
+			model.addAttribute("deptVO", deptVO);
+			return "admin/main";
+		}
+		
+		DeptVO ret = dService.save(deptVO);
+		return "redirect:/admin/dept";
+	}
+	
+	private void modelMapping(Model model) {
+		List<DeptVO> deptList = dService.selectAll();
+		model.addAttribute("DEPT_LIST", deptList);
+		model.addAttribute("BODY", "DEPT");
+	}
+	
+	/*
+	
+	
 
 	@ModelAttribute("deptVO")
 	public DeptVO newDept() {

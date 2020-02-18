@@ -45,11 +45,10 @@ public class AuthController {
 		return cUserDetails;
 	}
 	
-	
-	
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
 	public String join(Users userVO) {
 		aService.userSave(userVO);
 		return "redirect:/";
 	}
+	
 }

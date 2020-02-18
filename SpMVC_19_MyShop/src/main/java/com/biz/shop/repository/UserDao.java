@@ -7,10 +7,5 @@ import com.biz.shop.domain.Users;
 
 @Repository
 public interface UserDao extends JpaRepository<Users, String>  {
-	
-	
-	
-	
-	
 
 }

@@ -28,7 +28,6 @@ public class ProductService {
 		return proList;
 	}
 
-	
 	public ProductVO findByPCode(String p_code) {
 		// ProductVO proVO = pDao.find
 		// TODO Auto-generated method stub
@@ -47,7 +46,5 @@ public class ProductService {
 		// TODO Auto-generated method stub
 		return proVO.get();
 	}
-	
-	
-	
+
 }

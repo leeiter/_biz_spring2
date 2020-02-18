@@ -14,14 +14,10 @@ public class AdminController {
 	@RequestMapping(value = {"", "/"}, method = RequestMethod.GET)
 	public String main() {
 		return "admin/main";
-		
 	}
 	
 	// @RequestMapping(value = "/product", method = RequestMethod.GET)
 	public String admin(Model model) {
-
-		
-		
 		model.addAttribute("BODY", "PRODUCT");
 		return "admin/main";
 	}
