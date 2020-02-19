@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.biz.shop.domain.ProductVO;
-import com.biz.shop.repository.ProductDao;
+import com.biz.shop.persistence.ProductRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class ProductService {
 
-	private final ProductDao pDao;
+	private final ProductRepository pDao;
 	
 	public void save(ProductVO productVO) {
 		ProductVO p = pDao.save(productVO);

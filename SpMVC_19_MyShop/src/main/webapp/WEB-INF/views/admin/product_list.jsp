@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+
+
 <script>
 $(function() {
 	
@@ -18,7 +20,7 @@ $(function() {
 		tr tag가 클릭되면 id 값을 추출하고
 		update method로 전달하기
 	*/
-	$(".pro_tr").click(function() {
+	$(".p_edit_1").click(function() {
 		let id = $(this).data("id") // attr("data-id")
 		let c = $(this).attr("class")
 		
@@ -28,9 +30,33 @@ $(function() {
 	
 	})
 	
+	// var pro_call_func = 
+	
+	// $.contextMenu("html5")
+	$.contextMenu({
+		selector: ".pro_tr",
+		items: {
+			"edit" : {name : "상품 수정", icon: "edit"},
+			"delete" : {name : "상품 삭제", icon: "delete"}
+		},
+		callback: function(key) {
+			var id = $(this).data("id")
+			if(key == "edit") {
+				document.location.href = "${rootPath}/admin/product/update/" + id
+			} else if(key == "delete") {
+				if(confirm("정말 삭제합니다.")) {
+					document.location.href = "${rootPath}/admin/product/update/" + id
+				}
+			}
+			
+		}
+		
+	})
 })
 
 </script>
+
+<%@ include file="/WEB-INF/views/include/context-menu.jsp" %>
 
 <table class="col-md-4 col-12">
 	<tr>
@@ -49,7 +75,7 @@ $(function() {
 		</c:when>
 		<c:otherwise>
 			<c:forEach var="PRO" items="${PRO_LIST}" varStatus="i">
-				<tr class="pro_tr" data-id="${PRO.id}">
+				<tr class="pro_tr context-menu-one btn btn-naertal" data-id="${PRO.id}">
 					<td>${PRO.p_code}</td>
 					<td class="p_name">${PRO.p_name}</td>
 					<td>${PRO.p_bcode}</td>

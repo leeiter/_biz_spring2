@@ -7,10 +7,11 @@ import javax.validation.Valid;
 
 import org.springframework.stereotype.Service;
 
+import com.biz.shop.dao.DeptDao;
 import com.biz.shop.domain.DeptVO;
 import com.biz.shop.domain.ProductVO;
-import com.biz.shop.repository.DeptDao;
-import com.biz.shop.repository.ProductDao;
+import com.biz.shop.persistence.DeptRepository;
+import com.biz.shop.persistence.ProductRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,16 +21,21 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class DeptService {
 	
+	private final DeptRepository deptRepo;
 	private final DeptDao deptDao;
 	
 	public List<DeptVO> selectAll() {
-		List<DeptVO> deptList = deptDao.findAll();
+		List<DeptVO> deptList = deptRepo.findAll();
 		return deptList;
 	}
 
 	public DeptVO save(DeptVO deptVO) {
-		DeptVO ret = deptDao.save(deptVO);
+		DeptVO ret = deptRepo.save(deptVO);
 		return ret;
+	}
+
+	public List<DeptVO> findByDName(String search) {
+		return deptDao.findByDName(search);
 	}
 	
 	

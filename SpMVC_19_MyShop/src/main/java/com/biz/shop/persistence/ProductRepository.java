@@ -1,4 +1,4 @@
-package com.biz.shop.repository;
+package com.biz.shop.persistence;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -29,7 +29,7 @@ import com.biz.shop.domain.ProductVO;
  * 		값이 변동 되었을 때 원래 값, 변동 될 수 있는 class로 만든 변수
  * 		배열로 선언한 변수
  */
-public interface ProductDao extends JpaRepository<ProductVO, Long> {
+public interface ProductRepository extends JpaRepository<ProductVO, Long> {
 	
 	// C(R)UD 의 기본 method가 준비되어 있다.
 

@@ -61,8 +61,16 @@ td.p_name {
 		<c:when test="${BODY == 'DEPT'}">
 			<%@ include file="/WEB-INF/views/admin/dept.jsp" %>
 		</c:when>
+		<c:when test="${BODY == 'B2C_DETAIL'}">
+			<%@ include file="/WEB-INF/views/users/user_product_detail.jsp" %>
+		</c:when>
+		<c:otherwise>
+			<%@ include file="/WEB-INF/views/users/user_product_list.jsp" %>
+		</c:otherwise>
 	</c:choose>
 </section>
+
+
 
 </body>
 </html>

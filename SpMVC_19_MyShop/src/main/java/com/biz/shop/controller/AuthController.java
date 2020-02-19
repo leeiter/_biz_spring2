@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.biz.shop.domain.CustomUserDetails;
 import com.biz.shop.domain.Users;
-import com.biz.shop.repository.UserDao;
+import com.biz.shop.persistence.UseRepository;
 import com.biz.shop.service.AuthService;
 
 import lombok.RequiredArgsConstructor;

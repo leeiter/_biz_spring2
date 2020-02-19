@@ -35,6 +35,39 @@ $(function() {
 	
 	})
 	
+		$(".p_edit_1").click(function() {
+		let id = $(this).data("id") // attr("data-id")
+		let c = $(this).attr("class")
+		
+		// document.location.href = "${rootPath}/admin/product/update?id=" + id
+		document.location.href = "${rootPath}/admin/product/update/" + id
+		
+	
+	})
+	
+	// var pro_call_func = 
+	
+	// $.contextMenu("html5")
+	$.contextMenu({
+		selector: ".dept_tr",
+		items: {
+			"edit" : {name : "거래처 수정", icon: "edit"},
+			"delete" : {name : "거래처 삭제", icon: "delete"}
+		},
+		callback: function(key) {
+			var id = $(this).data("id")
+			if(key == "edit") {
+				document.location.href = "${rootPath}/admin/dept/update/" + id
+			} else if(key == "delete") {
+				if(confirm("정말 삭제합니다.")) {
+					document.location.href = "${rootPath}/admin/dept/update/" + id
+				}
+			}
+			
+		}
+		
+	})
+	
 })
 
 </script>

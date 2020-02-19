@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -52,10 +53,25 @@ public class DeptController {
 		return "redirect:/admin/dept";
 	}
 	
-	private void modelMapping(Model model) {
-		List<DeptVO> deptList = dService.selectAll();
+	private void modelMapping(Model model, String search) {
+		List<DeptVO> deptList = null;
+		if(search == null) {
+			deptList = dService.selectAll();
+		} else {
+			deptList = dService.findByDName(search);
+		}
 		model.addAttribute("DEPT_LIST", deptList);
 		model.addAttribute("BODY", "DEPT");
+	}
+	
+	private void modelMapping(Model model) {
+		this.modelMapping(model, null);
+	}
+	
+	@RequestMapping(value = {"/search/{search}", "/search/", "/search"}, method = RequestMethod.GET)
+	public String search(@PathVariable("search") String search, Model model) {
+		this.modelMapping(model, search);
+		return "admin/dept_list";
 	}
 	
 	/*

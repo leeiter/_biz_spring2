@@ -23,7 +23,7 @@ $(function() {
 		*/
 		if(e.keyCode == KEY_F9) {			
 			let search = $(this).val()
-			let dept_url = "${rootPath}/admin/dept/list"
+			let dept_url = "${rootPath}/admin/dept/search/" + search
 			
 			let win_style = "toolbar=no,"
 			win_style += "scrollbar=yes,"
