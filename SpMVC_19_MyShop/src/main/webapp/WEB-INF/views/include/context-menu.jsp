@@ -8,6 +8,6 @@
 </menu>
 
 <menu id="dept_context" type="context">
-	<menuitem label="거래처 수정" class="d_edit" />
-	<menuitem label="거래처 삭제" class="d_delete" />
+	<menuitem label="거래처 수정" class="d_edit"></menuitem>
+	<menuitem label="거래처 삭제" class="d_delete"></menuitem>
 </menu>

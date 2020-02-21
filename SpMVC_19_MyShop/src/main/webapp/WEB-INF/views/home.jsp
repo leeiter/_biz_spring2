@@ -45,6 +45,5 @@ $(function() {
 	</ul>
 </nav>
 
-2020. 2. 10.
 </body>
 </html>

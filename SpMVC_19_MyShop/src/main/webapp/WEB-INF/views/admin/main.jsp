@@ -8,6 +8,11 @@
 <head>
 <%@ include file="/WEB-INF/views/include/include-head.jspf" %>
 <style>
+.nav-item {
+	font-weight: bold;
+	padding: 10px;
+}
+
 .in-errors {
 	color: red;
 	font-size: 8px;
@@ -35,40 +40,22 @@ td.p_name {
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
+
 </style>
 </head>
 <body>
 
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
-  <a class="navbar-brand" href="#">Logo</a>
-  <ul class="navbar-nav">
-    <li class="nav-item">
-      <a class="nav-link" href="#">Link</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Link</a>
-    </li>
-  </ul>
-</nav>
-
-<div class="container-fluid" style="margin-top:80px">
-  <h3>Top Fixed Navbar</h3>
-  <p>A fixed navigation bar stays visible in a fixed position (top or bottom) independent of the page scroll.</p>
-  <h1>Scroll this page to see the effect</h1>
-</div>
-
-
-<nav class="navbar navbar-expand-sm bg-primary navbar-dark">
-	<ul class="navbar-nav">
-		<li class="navbar-item"><a class="nav-link" href="${rootPath}/">HOME</a></li>
-		<li class="navbar-item"><a class="nav-link" href="${rootPath}/admin/product/">상품정보</a></li>
-		<li class="navbar-item"><a class="nav-link" href="#">품목정보</a></li>
-		<li class="navbar-item"><a class="nav-link" href="${rootPath}/admin/dept">거래처정보</a></li>
-		<li class="navbar-item">
+<nav class="avbar-expand-sm bg-dark">
+	<ul class="nav justify-content-center">
+		<li class="nav-item"><a class="nav-link text-light" href="${rootPath}/">HOME</a></li>
+		<li class="nav-item"><a class="nav-link text-light" href="${rootPath}/admin/product/">상품정보</a></li>
+		<li class="nav-item"><a class="nav-link text-light" href="#">품목정보</a></li>
+		<li class="nav-item"><a class="nav-link text-light" href="${rootPath}/admin/dept">거래처정보</a></li>
+		<li class="nav-item">
 			<form:form action="${rootPath}/logout" name="logout_form">
-				<a class="nav-link" onclick="document.logout_form.submit()" href="javascript:void(0)">로그아웃</a>
+				<a class="nav-link text-light" onclick="document.logout_form.submit()" href="javascript:void(0)">로그아웃</a>
 			</form:form>
-		</li>				
+		</li>
 	</ul>
 </nav>
 
@@ -88,8 +75,6 @@ td.p_name {
 		</c:otherwise>
 	</c:choose>
 </section>
-
-
 
 </body>
 </html>

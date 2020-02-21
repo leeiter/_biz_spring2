@@ -32,7 +32,7 @@ public class HomeController {
 	 * 5. 파일을 찾으면 tomcat에게 해당 파일을 전달하고
 	 * 6. 사용자에게 응답을 보내도록 한다.
 	 * 		response
-	 */
+	 */ 
 
 	// 서버로 전달되는 것을 Request
 	@RequestMapping("/")
