@@ -87,7 +87,7 @@
 			login-page="/auth/login"
 		-->
 		<security:form-login login-page="/auth/login" login-processing-url="/login" authentication-failure-url="/auth/login?error"
-			default-target-url="/auth/login_ok" username-parameter="username" password-parameter="password" />
+			default-target-url="/" username-parameter="username" password-parameter="password" />
 			
 		<!-- 
 			logout을 시도해서 정상적으로 logout이 되면

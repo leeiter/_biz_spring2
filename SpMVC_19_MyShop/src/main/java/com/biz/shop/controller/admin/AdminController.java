@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 @Controller
 public class AdminController {
 	
-	private CartService cartService;
+	private final CartService cartService;
 
 	@RequestMapping(value = {"", "/"}, method = RequestMethod.GET)
 	public String main(Model model) {
