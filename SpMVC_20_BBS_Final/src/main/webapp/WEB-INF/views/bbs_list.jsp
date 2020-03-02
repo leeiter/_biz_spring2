@@ -30,12 +30,17 @@
 					<th>일시</th>
 					<th>제목</th>
 				</tr>
-				<tr>
-					<td>NO</td>
-					<td>작성자</td>
-					<td>일시</td>
-					<td>제목</td>
-				</tr>
+				<c:forEach items="${BBS_LIST}" var="BBS" varStatus="i">
+					<tr>
+						<td>${i.count}</td>
+						<td>${BBS.b_writer}</td>
+						<td>${BBS.b_date_time}</td>
+						<td>
+							<a href="${rootPath}/detail?b_id=${BBS.b_id}">
+								${BBS.b_subject}</a>
+						</td>
+					</tr>
+				</c:forEach>
 			</table>
 		</article>
 		<article class="d-flex justify-content-end">
