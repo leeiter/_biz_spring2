@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- logback-test로 하는 것은 logback 보다 먼저 실행이 되기 때문에 -->
+<configuration>
+	<appender name="STD_OUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>
+				%d{HH:mm:ss.SSS} %-5level %logger{36} -%msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<!-- 설정 패턴 등록 -->
+	<appender name="myOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>
+				-----------------------------------
+				%d{HH:mm:ss.SSS} %-5level %logger{36} -%msg
+				-----------------------------------%n
+			</pattern>
+		</encoder>
+	</appender>
+	
+	<logger name="com.biz.shop.controller" level="WARN" additivity="false">
+		<appender-ref ref="STD_OUT" />
+	</logger>
+	
+	<logger name="com.biz.shop.controller" level="DEBUG" additivity="false">
+		<appender-ref ref="myOUT" />
+	</logger>
+	
+	<logger name="com.biz.shop.service" level="DEBUG" additivity="false">
+		<appender-ref ref="myOUT" />
+	</logger>
+	
+	<root level="INFO">
+		<appender-ref ref="STD_OUT" />
+	</root>
+</configuration>

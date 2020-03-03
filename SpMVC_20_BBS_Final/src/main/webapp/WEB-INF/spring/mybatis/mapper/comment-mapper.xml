@@ -5,6 +5,16 @@
   
  <mapper namespace="com.biz.bbs.repository.CommentDao">
  
+ 	<select id="findByBIdLevel" resultType="commentVO">
+	 	SELECT c_id, c_p_id, c_b_id, c_writer,
+		LPAD('re : ', (LEVEL - 1) * 5, 're : ') || c_subject AS c_subject
+		FROM tbl_comment
+		WHERE c_b_id = #{c_b_id}
+		START WITH c_p_id = 0
+		CONNECT BY PRIOR c_id = c_p_id
+		ORDER SIBLINGS BY c_p_id
+ 	</select>
+ 
  	<insert id="insert" parameterType="commentVO">
  		INSERT INTO tbl_comment(
 			C_ID,

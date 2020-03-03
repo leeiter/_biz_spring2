@@ -14,6 +14,11 @@ public interface CommentDao {
 	public CommentVO findById(long c_id);
 	
 	/*
+	 * 오라클의 쿼리를 이용하여 계층형 코멘트 데이터 추출
+	 */
+	public List<CommentVO> findByBIdLevel(long c_b_id);
+	
+	/*
 	 * 게시판 원글에 달린 코멘트 들만 추출하기
 	 */
 	@Select("SELECT * FROM tbl_comment WHERE c_b_id = #{c_b_id} AND c_p_id = 0 ORDER BY c_date_time DESC")

@@ -3,6 +3,7 @@ package com.biz.bbs.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,12 +45,14 @@ public class BBsController {
 	 * 		좋은 설계인다. 
 	 */
 	@Autowired
+	@Qualifier("bbsV2")
 	private BBsService bbsService;
 	
 	@Autowired
 	private FileService fileService;
 	
 	@Autowired
+	@Qualifier("cmtV2")
 	private CommentService cmtService;
 	
 	/*
