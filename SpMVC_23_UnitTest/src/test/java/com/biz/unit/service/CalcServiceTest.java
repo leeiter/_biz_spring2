@@ -1,31 +1,30 @@
 package com.biz.unit.service;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
 public class CalcServiceTest {
-	
+
 	CalcService cs = null;
 	
 	/*
-	 * 현재 test 케이스에서 공통으로 사용할
-	 * 변수, 객체 등을 생성하는 초기화 method
-	 * test 객체가 작동될 때 최초 한번 실행하는 method
+	 * 현재 test케이스에서 공통으로 사용할
+	 * 변수, 객체등을 생성하는 초기화 method
+	 * test 객체가 작동될때 최초 한번 실행하는 method
 	 */
 	@Before
 	public void setUp() {
 		cs = new CalcService();
 	}
-
+	
 	/*
-	 * 각 클래스에 정의된 method를 테스트 수행
+	 * 각 클래스에 정의된 method를 테스트수행
 	 */
 	@Test
-	public void testTest() {
+	public void timesTest() {
 		int result = cs.times(20, 30);
-		
 		// assertEquals(예상답안, 계산결과, 허용오차)
 		assertEquals(600, result, 0);
 	}
@@ -35,7 +34,7 @@ public class CalcServiceTest {
 		int result = cs.sum(20, 30);
 		assertEquals(50, result, 0);
 	}
-	
+
 	@Test
 	public void timesTest1() {
 		int[][] testCase = { 
@@ -72,7 +71,7 @@ public class CalcServiceTest {
 		
 		for(int i = 0 ; i < testCase.length ; i++) {
 			int result = cs.times(testCase[i][0], testCase[i][1]);
-			assertEquals(testCase[i][2], result, 0);
+			assertEquals(testCase[i][2], result,0);
 		}
 	}
 

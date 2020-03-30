@@ -12,13 +12,13 @@ public class AddrService {
 		Map<String, String> addr = new HashMap<String, String>();
 		addr.put("name", "홍길동");
 		addr.put("addr", "서울특별시");
-		addr.put("tel", "010-1111-1111");
+		addr.put("tel", "010-111-1111");
 		
 		return addr;
 	}
 	
-	public String getName()
-	{
-		
+	public String getName(String name) {
+		return "내이름은" + name + "입니다";
 	}
+
 }
