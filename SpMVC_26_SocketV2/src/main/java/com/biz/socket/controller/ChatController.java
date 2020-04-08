@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
  * LifeCycle Method
  * 어떤 동작이 수행되는 과정에서 자동으로 호출되는 method들
  * 
- * LifeCycle Method를 잘구현하므로써
+ * LifeCycle Method를 잘 구현하므로써
  * 별도 어떤 동작에 해당하는 복잡한 코드를 만들지 않아도
  * 충분한 효과를 발휘할 수 있다.
  * 
@@ -34,15 +34,14 @@ import lombok.extern.slf4j.Slf4j;
  * 클라이언트에서 메시지를 보내면 메시지를 수신하고
  * 연산코드를 수행한 후
  * 그 결과를 다시 client에게 보내는 코딩
+ * 
  * nodejs등 다른 서버에서는
  * 메시지별로 별도로 method를 독립적으로 작성하기도 한다.
- * socket.on("메시지", ) >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+ * socket.on("메시지", callback)
  * 
  * afterConnectionClosed
  * client와 연결이 정상, 비정상적으로 종료되었을 때
  * 수행할 코딩
- * 
- * 
  */
 
 @Slf4j
@@ -57,61 +56,47 @@ public class ChatController extends TextWebSocketHandler {
 		messageMap = new HashMap<String, MessageVO>();
 	}
 
-	// nodejs LifeCycle
-	// spring pre, post
-	
 	// LifeCycle code 사용시에는 method에 맞는 코드를 작성을 잘 해줘야 한다.
-	// 그렇지 않으면 아무리 좋은 코드라고 해도 잘못 작성이 되었으면 작동을 아예 하지 않는다.
+	// 그렇지 않으면 아무리 좋은 코드라고 해도 맞지 않는 method에 작성이 되었으면 작동을 아예 하지 않는다.
 	
-	
-	// 열기
-	// open 이되고 나면 Established 작동
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		// TODO Auto-generated method stub
 		super.afterConnectionEstablished(session);
-		
-		// 
+
 		/*
 		 * 최초 어떤 사용자가 접속하면
 		 * 사용자에 대한 메시지 정보를 담을 변수 초기화
 		 * 
-		 * session id를 key값으로 하는 비어있는 사용자 정보는 map에 저장
+		 * session id를 key값으로 하는 비어있는 사용자 정보를
+		 * map에 저장
 		 */
 		sessionList.add(session);
-		
-		
-		MessageVO mVO = new MessageVO();
-		
+
+		MessageVO mVO = new MessageVO();		
 		messageMap.put(session.getId(), mVO);
 	}
-	
-	// 닫기
+
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		// TODO Auto-generated method stub
 		super.afterConnectionClosed(session, status);
 		sessionList.remove(session);
 		messageMap.remove(session.getId());
 	}
 
-	// 수신
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		super.handleTextMessage(session, message);
 		
 		// jackson Bind 클래스인 ObjeceMapper를 사용하여
 		// VO 클래스를 Json형 문자열로 바로 변환시키기
-ObjectMapper objMapper = new ObjectMapper();
-Map<String, String> map = new HashMap<String, String>();
-
-
-
-// 여기서부터는 임의의 command protocol을 선언
+		ObjectMapper objMapper = new ObjectMapper();
+		Map<String, String> map = new HashMap<String, String>();
+		
+		log.debug("MESSAGE: " + message.getPayload());
+		// 여기서부터는 임의의 command protocol을 선언
 		// 전달받은 메시지에 command가 포함되어 있는가를 구분하는 코드
 		String user[] = message.getPayload().split(":");
 		
-
 		// userName:값 또는 getUserList:값 이런 식의 메시지가 전달되었으면?
 		if(user.length > 1) {
 			// command가 USERNAME 이면
@@ -129,7 +114,7 @@ Map<String, String> map = new HashMap<String, String>();
 				this.sendMeMessage(session, userName);
 				return ;
 				
-				// command가 GETUSERLIST 이면
+				// command가 GetUserList 이면
 				// 현재 접속자 정보를 모두 client로 보내기
 			} else if(user[0].equalsIgnoreCase("GETUSERLIST")) {
 				log.debug("GETUSERLIST");
@@ -138,37 +123,28 @@ Map<String, String> map = new HashMap<String, String>();
 				map.put("userList", userList);
 				
 				String userListMap = objMapper.writeValueAsString(map);
-				
 				log.debug(userListMap);
 				
 				/*
-				 * 
 				 * {msg:''userList', 'userList':userList}
 				 * {userList:{session:{userName : '홍길동'}}}
 				 * 배열과 비슷 
-				 * 10:04:54.504 [http-nio-8080-exec-5] DEBUG com.biz.socket.controller.ChatController - 
-				 * {
-				 * "msg":"userList",
+				 * 
+				 * {"msg":"userList",
 				 * "userList":"{\"t2ilt5g4\":{\"userName\":\"홍\",\"message\":null,\"sendUser\":null}}"}
 				 */
-				
 				this.sendAllMessage(session, userListMap);
-				
 				return ;
 			}
 		}
-		// TODO Auto-generated method stub
 		
-
 		// 채팅이 진행되는 과정에서 메시지 전파
 		Gson gson = new Gson();
-		/*
-		 * Gson을 사용하여 문자열형 JSON 데이터를 VO로 변환
-		 */
+
+		// Gson을 사용하여 문자열형 JSON 데이터를 VO로 변환
 		MessageVO messageVO = gson.fromJson(message.getPayload(), MessageVO.class);
 		
 		String sendMessage = String.format("%s 로부터 : %s", messageVO.getUserName(), messageVO.getMessage());
-
 		String jsonTextMessage = objMapper.writeValueAsString(messageVO);
 
 		if(messageVO.getToUser().equalsIgnoreCase("ALL")) {
@@ -185,9 +161,6 @@ Map<String, String> map = new HashMap<String, String>();
 				}
 			}
 		}
-
-		
-
 	}
 	
 	// 요청한 접속자에게만 메시지 보내기
@@ -199,7 +172,6 @@ Map<String, String> map = new HashMap<String, String>();
 	
 	// 무조건 전체 접속자에게 메시지 보내기
 	private void sendAllMessage(WebSocketSession session, String textMessage) throws IOException {
-		
 		TextMessage sendMessage = new TextMessage(textMessage);
 		
 		for(WebSocketSession ws : sessionList) {
@@ -209,7 +181,6 @@ Map<String, String> map = new HashMap<String, String>();
 	
 	// 현재 접속자를 제외한 나머지 접속자에게 메시지 보내기
 	private void sendNotMeMessage(WebSocketSession session, String textMessage) throws IOException {
-		
 		TextMessage sendMessage = new TextMessage(textMessage);
 		
 		for(WebSocketSession ws : sessionList) {
@@ -217,10 +188,7 @@ Map<String, String> map = new HashMap<String, String>();
 			// 자신이 보낸 메시지를 제외하고 전송
 			if(!ws.getId().equals(session.getId())) {
 				ws.sendMessage(sendMessage);
-				
 			}
-				
-			
 		}
 	}
 	

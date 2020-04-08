@@ -32,7 +32,6 @@ public class WebSocketController extends TextWebSocketHandler {
 	 */
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		// TODO Auto-generated method stub
 		super.afterConnectionEstablished(session);
 		
 		// 접속된 client의 정보를 sessionList에 추가
@@ -40,12 +39,9 @@ public class WebSocketController extends TextWebSocketHandler {
 		log.debug("접속된 client ID : {}", session.getId());
 	}
 
-	/*
-	 * client가 메시지를 보내면 메시지를 수신하는 controller method
-	 */
+	// client가 메시지를 보내면 메시지를 수신하는 controller method
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-		// TODO Auto-generated method stub
 		super.handleTextMessage(session, message);
 		
 		log.debug("{} 클라이언트가 보낸 메시지 : {}", session.getId(), message.getPayload());
@@ -63,9 +59,5 @@ public class WebSocketController extends TextWebSocketHandler {
 			ws.sendMessage(message);
 		}
 	}
-
-
-	
-	
 
 }
