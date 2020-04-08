@@ -7,31 +7,32 @@
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/tx https://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 		
-	<!-- StandardPBE... 클래스가
-	암호문을 복호화할 때 사용할 Salt 키를 제공해줄 보조 클래스
-	
-	서버, 컴퓨터에 설정된 환경변수 값을 읽어서 Salt로 사용할 수 있도록
-	만들어주는 클래스
-	
-	Salt 문자열을 아무나 볼 수 있는 평문으로 설정하기
-	<property name="password" value="BIZ.COM" />
-	
-	Salt 문자열을 컴퓨터(서버)의 환경변수에서 가져와서 사용하라
-	<property name="passwordEnvName" value="BIZ.COM" />
-	
-	 -->
+	<!--
+		StandardPBE... 클래스가
+		암호문을 복호화할 때 사용할 Salt 키를 제공해줄 보조 클래스
+		
+		서버, 컴퓨터에 설정된 환경변수 값을 읽어서 Salt로 사용할 수 있도록
+		만들어주는 클래스
+		
+		Salt 문자열을 아무나 볼 수 있는 평문으로 설정하기
+		<property name="password" value="BIZ.COM" />
+		
+		Salt 문자열을 컴퓨터(서버)의 환경변수에서 가져와서 사용하라
+		<property name="passwordEnvName" value="BIZ.COM" />
+	-->
 	<bean id="envConfig" class="org.jasypt.encryption.pbe.config.EnvironmentStringPBEConfig">
 		<property name="algorithm" value="PBEWithMD5AndDES" />
 		<property name="passwordEnvName" value="BIZ.COM" />
-		
 	</bean>
 	
-	<!-- Encrypt... 클래스가 db.connection.properties 파일의 암호화된 문자열을
-	 읽어서 복호화 한후 일반 문자열로 변환하여 property로 사용할 수 있도록
-	 도와주는 보조 클래스
-	 
-	 Environment... 클래스가 제종하는 Salt와, 알고리즘 설정을 사용하여 복호화를 한다.
-	  -->
+	<!--
+		Encrypt... 클래스가 db.connection.properties 파일의 암호화된 문자열을
+		읽어서 복호화 한후 일반 문자열로 변환하여 property로 사용할 수 있도록
+		도와주는 보조 클래스
+		 
+		Environment... 클래스가 제종하는 Salt와, 알고리즘 설정을 사용하여
+		복호화를 한다.
+	-->
 	<bean id="encConvert" class="org.jasypt.encryption.pbe.StandardPBEStringEncryptor">
 		<property name="config" ref="envConfig" />
 	</bean>	
@@ -61,15 +62,11 @@
 	<bean id="authDB" class="org.apache.commons.dbcp2.BasicDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/secur?serverTimezone-Asia/Seoul&amp;useSSL=false" />
-		<property name="username" value="secur" />
-		<property name="password" value="secur" />
+		<property name="username" value="${mysql.username}" />
+		<property name="password" value="${mysql.password}" />
 	</bean>
 	
-	<!-- security 파일들을 가져올 때 사용한다. 
-		그리고 <tx:annotation-driven/> 을 작성을 하면 무조건 같이 작성을 해야 한다.
-		
-		
-	-->
+	<!-- <tx:annotation-driven/> 을 사용 가능하게 함 -->
 	<context:annotation-config />
 
 	<!-- 트랜잭션 관리자 활성화 -->
