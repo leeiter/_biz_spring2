@@ -6,7 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>나의 홈페이지</title>
+<title>My Chat</title>
+
 <style>
 	.from, .to {
 		padding: 5px;
@@ -17,30 +18,30 @@
 		font-weight: bold;
 	}
 </style>
+
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
 <script>
 	var socket = new SockJS('http://localhost:8080/socket/chat');
 	
 	// 소켓 서버에 접속 시작
-	socket.onopen = function() {
-	    console.log('open');
-	    // socket.send('Hello');
-	    
+	socket.onopen = function() {	    
 	    // 소켓이 서버에 접속이 성공한 다음 최초에 실행될 코드
 	    let userName = prompt("채팅방 입장!!\n이름을 입력하세요.")
 		if(userName && userName != "") {
 			socket.send("userName:" + userName) // userName:홍길동
 		}
+	    socket.send("GETUSERLIST")
 	};
 
 	// 서버로부터 수신되는 이벤트
 	socket.onmessage = function(e) {
 	    console.log('message', e.data);
-	    // alert(e.data);
 	    
 	    // 문자열형으로 수신된 json 문자열을 json 객체로 변환
 	    let mJson = JSON.parse(e.data)
@@ -48,15 +49,16 @@
 	    // 서버로 부터 전달받은 데이터에 msg라는 key가 있느냐
 	    // key가 있으면 key가 userName이냐?
 	    if(mJson.msg && mJson.msg == 'userName') {
-	    	alert(mJson.userName)
 	    	$("#userName").val(mJson.userName)
 	    	$("#userName").prop("readonly", true)
 	    	
 	    	return false;
-	    	
 	    }
 	    
+	    alert(mJson.msg)
 	    if(mJson.msg && mJson.msg == 'userList') {
+	    	alert(mJson.userList)
+	    	
 	    	let userList = JSON.parse(mJson.userList)
 	    	
 	    	// 동적 tag를 만드는 jquery 코드
@@ -65,9 +67,6 @@
 	    	for(let i = 0 ; i < userList.length ; i++) {
 	    		options.append($("<option/>"), {value : userList[i].userName, text:userList[i].userName})
 	    	}
-	    	
-	    	
-	    	
 	    }
 	    
 	    let html = "<div class='from text-right'>"
@@ -78,7 +77,6 @@
 	    html += "</div>"
 	    
 	    $("#message_list").append(html)
-	    // sock.close();
 	};
 
 	// 소켓 서버와 접속 종료
@@ -88,8 +86,6 @@
 	
 	$(function() {
 		
-		
-	
 		$(document).on("submit", "form", function() {
 			event.preventDefault();
 			// let message = $("#message").val()
@@ -125,14 +121,8 @@
 		$("#message").val("")
 		
 	})
-	
-	socket.send("getUserList")
-
-	
+	// socket.send("getUserList")
 })
-</script>
-<script>
-
 </script>
 </head>
 <body>
@@ -146,8 +136,8 @@
 			<input id="userName" class="form-control" placeholder="보내는 사람"><br/>
 		</div>
 		<div class="form-group">
-			<label for="tolist">받는사람</label>
-			<select id="tolist">
+			<label for="toList">받는사람</label>
+			<select id="toList">
 				<option value="all">전체</option>
 			</select>
 		</div>
@@ -160,10 +150,8 @@
 </section>
 <section class="container-fluid">
 	<div id="user_list" class="col-3">
-		
 	</div>
 	<div id="message_list" class="col-8">
-	
 	</div>
 </section>
 </body>

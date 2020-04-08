@@ -1,4 +1,4 @@
-package com.biz.socket.controller;
+package com.biz.temp.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
