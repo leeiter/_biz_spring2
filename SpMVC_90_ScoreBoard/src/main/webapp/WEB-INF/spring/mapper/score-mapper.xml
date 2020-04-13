@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="com.biz.score.persistence.ScoreDao">
+
+ 	<insert id="insert" parameterType="scoreVO">
+		INSERT INTO `tbl_score`
+		(
+		`s_num`,
+		`s_subject`,
+		`s_score`)
+		VALUES
+		(
+		#{s_num},
+		#{s_subject},
+		#{s_score})
+
+
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="scoreVO">
+		UPDATE `tbl_score`
+		SET
+		`s_subject` = #{s_subject},
+		`s_score` = #{s_score}
+		WHERE `s_num` = #{s_num}
+
+ 		
+ 	</update>
+
+ </mapper> 

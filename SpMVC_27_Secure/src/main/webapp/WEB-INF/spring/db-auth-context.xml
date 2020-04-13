@@ -42,7 +42,8 @@
 		사용하기 위한 준비
 		
 		Encrypt... 클래스는 StandardPBE... 클래스를 사용하여
-		db.connention.properties 파일에 저장된 암호화 문자열을 명문 문자열로 복호화 한다.
+		db.connention.properties 파일에 저장된 암호화 문자열을 명문 문자열로
+		복호화 한다.
 		
 		PropertyPlaceholder : 암호화된 파일
 	-->
@@ -59,9 +60,19 @@
 	<!-- security 인증과 관련된 user DB 설정 부분 -->
 	<!-- dataSource -->
 	<!-- driverClassName, url, username, password -->
+	<!-- 
+		&useSSL=false : 5.7 에서 issue
+		보안연결을 설정하지 않으면 MySQL 서버에 접근하지 못하던 문제를 해결방법
+		8.x에서는 사용하지 말아야 하는 옵션
+		
+		만약 사용을 하려면 다음 항목도 같이 추가해야 한다.
+		&allowPublicKeyRetrieval=true
+		
+		?serverTimezone=Asia/Seoul&amp;useSSL=false&amp;&allowPublicKeyRetrieval=true
+	 -->
 	<bean id="authDB" class="org.apache.commons.dbcp2.BasicDataSource">
-		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:3306/secur?serverTimezone-Asia/Seoul&amp;useSSL=false" />
+		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/secur?serverTimezone=Asia/Seoul" />
 		<property name="username" value="${mysql.username}" />
 		<property name="password" value="${mysql.password}" />
 	</bean>

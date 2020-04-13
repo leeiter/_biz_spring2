@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="com.biz.score.persistence.StudentDao">
+
+ 	<insert id="insert" parameterType="studentVO">
+		INSERT INTO `tbl_student`
+			(`st_num`,
+			`st_name`,
+			`st_class`,
+			`st_group`)
+		VALUES
+			(#{st_num},
+			#{st_name},
+			#{st_class},
+			#{st_group})
+
+ 	</insert>
+ 	
+ 	<update id="update" parameterType="studentVO">
+ 		UPDATE `tbl_student`
+		SET
+		`st_name` = #{st_name},
+		`st_class` = #{st_class},
+		`st_group` = #{st_group}
+		WHERE `st_num` = #{st_num}
+ 		
+ 	</update>
+
+ </mapper> 
