@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<c:set var="rootPath" value="${pageContext.request.contextPath}"/>
 
 <style>
 	* {
@@ -11,6 +14,10 @@
 		width: 100%;
 		display: flex;
 		margin: 0 auto;
+	}
+	
+	a {
+		border: 1px solid white;
 	}
 	
 	#navbar {
@@ -37,8 +44,11 @@
 		color: black;
 	}
 	
-	#navbar a:nth-child(4) {
+	a:nth-child(4) {
+		width: 300px;
 		margin-left: auto;
+		display: block;
+
 	}
 </style>
 <script>
@@ -58,6 +68,33 @@ $(function() {
 		
 	})
 	
+	/*
+	$(document).on("click", "a.logout", function() {
+		
+		if(confirm("로그아웃 할까요?")) {
+			$.post("${rootPath}/logout", {${_csrf.parameterName} : "${_csrf.token}"}, function(result) {
+				document.location.replace("${rootPath}/")
+			}
+				
+			})
+		}
+		
+	})
+	*/
+	
+	$(document).on("click", "a.logout", function() {
+		
+		if(confirm("로그아웃할까요?")) {
+			$.post("${rootPath}/logout",
+				{${_csrf.parameterName} : "${_csrf.token}"},
+				function(result) {
+					document.location.replace("${rootPath}/")
+				}
+			)
+		}
+		
+	})
+	
 })
 </script>
 
@@ -65,7 +102,18 @@ $(function() {
 		<a href="/">Home</a>
 		<a href="#">성적처리</a>
 		<a href="#">독서관리</a>
-		<a href="#">로그인</a>
-		<a href="#">로그아웃</a>
-		<a href="#">My Page</a>
+		
+		<sec:authorize access="isAnonymous()">
+			<a href="${rootPath}/user/login">로그인</a>
+		</sec:authorize>
+		
+		<sec:authorize access="isAuthenticated()">
+				<a href="javascript:void(0)" class="logout">로그아웃</a>
+			<a href="${rootPath}/user/mypage">My Page</a>
+		</sec:authorize>
+		
+		<sec:authorize access="hasRole('ROLE_ADMIN')">
+			<a href="#">관리자 홈</a>
+		</sec:authorize>
+
 	</nav>

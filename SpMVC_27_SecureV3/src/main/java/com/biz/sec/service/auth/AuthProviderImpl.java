@@ -8,6 +8,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.biz.sec.domain.UserDetailsVO;
@@ -41,19 +42,20 @@ public class AuthProviderImpl implements AuthenticationProvider {
 		String password = (String) authentication.getCredentials();
 		
 		// Service -> Dao 통해서 DB로 부터 사용자 정보 가져오기
-		UserDetailsVO user = (UserDetailsVO) userDService.loadUserByUsername(username);
-		if(!passwordEncoder.matches(password, user.getPassword())) {
+		UserDetailsVO userVO = (UserDetailsVO) userDService.loadUserByUsername(username);
+
+		if(!passwordEncoder.matches(password.trim(), userVO.getPassword().trim())) {
 			throw new BadCredentialsException("PASSWORD ERROR");
 		}
 		
 		// enabled가 false이면, 사용금지된 username일 경우
-		if(!user.isEnabled()) {
+		if(!userVO.isEnabled()) {
 			throw new BadCredentialsException(username + "접근 권한 없음");			
 		}
 		
 		// UserDeatilsService에서 보내준 사용자 정보를
 		// Controller로 보내는 일을 수행
-		return new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+		return new UsernamePasswordAuthenticationToken(userVO, userVO.getPassword(), userVO.getAuthorities());
 	}
 
 	@Override
@@ -61,5 +63,6 @@ public class AuthProviderImpl implements AuthenticationProvider {
 		// TODO Auto-generated method stub
 		return true;
 	}
-
+	
+	
 }
