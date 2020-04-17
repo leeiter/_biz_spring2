@@ -11,7 +11,7 @@ import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
  * 키보드에서 문자열을 입력받아서
  * 암호화된 문자열을 생성
  */
-public class EncMain {
+public class GmailEnc {
 
 	public static void main(String[] args) {
 		
@@ -26,10 +26,10 @@ public class EncMain {
 		
 		Scanner scanner = new Scanner(System.in);
 		
-		System.out.print("MySQL UserName >> ");
+		System.out.print("Gmail UserName >> ");
 		String userName = scanner.nextLine();
 		
-		System.out.print("MySQL Password >> ");
+		System.out.print("Gmail Password >> ");
 		String password = scanner.nextLine();
 		
 		/*
@@ -45,10 +45,10 @@ public class EncMain {
 		System.out.printf("username : %s \n", encUserName);
 		System.out.printf("password : %s \n", encPassword);
 		
-		String saveFile = "./src/main/webapp/WEB-INF/spring/db.connection.properties";
+		String saveFile = "./src/main/webapp/WEB-INF/spring/properties/gmail.connection.properties";
 		
-		String saveUserName = String.format("mysql.username=ENC(%s)", encUserName);
-		String savePassword = String.format("mysql.password=ENC(%s)", encPassword);
+		String saveUserName = String.format("gmail.username=ENC(%s)", encUserName);
+		String savePassword = String.format("gmail.password=ENC(%s)", encPassword);
 		
 		try {
 			PrintWriter out = new PrintWriter(saveFile);
@@ -62,7 +62,7 @@ public class EncMain {
 			e.printStackTrace();
 		}
 		scanner.close();
-		System.out.println("db.connection.properties 저장완료.");
+		System.out.println("gmail.connection.properties 저장완료.");
 		
 	}
 

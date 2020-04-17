@@ -53,6 +53,8 @@
 		<property name="locations">
 			<list>
 				<value>/WEB-INF/spring/properties/db.connection.properties</value>
+				<value>/WEB-INF/spring/properties/naver.connection.properties</value>
+				<value>/WEB-INF/spring/properties/gmail.connection.properties</value>
 			</list>
 		</property>
 	</bean>
