@@ -63,3 +63,4 @@ local.properties
 RemoteSystemsTempFiles/
 NaverConfig.*
 DataGoConfig.*
+*-mail-context.xml
