@@ -5,9 +5,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>나의 홈페이지</title>
 <%@ include file="/WEB-INF/views/include/include-head.jspf" %>
 
 <style>
@@ -20,17 +17,9 @@
 <%@ include file="/WEB-INF/views/include/include-nav.jspf" %>
 
 <div>
-	<c:choose>
-		<c:when test="${BODY == 'MYPAGE'}">
-			<%@ include file="/WEB-INF/views/auth/mypage.jsp" %>
-		</c:when>
-		<c:otherwise>
-			<section id="body">
-	
-			</section>
-		</c:otherwise>
-	</c:choose>
-</div>
+	<section id="body">
 
+	</section>
+</div>
 </body>
 </html>

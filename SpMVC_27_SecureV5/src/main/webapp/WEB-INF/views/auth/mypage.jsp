@@ -56,65 +56,52 @@ $(function() {
 		}
 		
 	})
-	
-	
-	
+		
 })
 </script>
 <style>
-section {
-	position: fixed;
-	top: 70px;
-	left: 0;
-	width: 100% 
+.body {
+	width: 50%;
+	margin: 0 auto;
 }
 
-form {
-	width: 70%;
-	margin: 0 auto;
+h2 {
+	font-size: 4.5rem;
+	margin-top: 70px;
+	margin-bottom: 25px;
 }
 
 form div.password {
 	display: none;
 }
-
-form input.auth {
-	display: block;
-}
-
 </style>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/include/include-nav.jspf" %>
 
-<section>
-<form:form modelAttribute="userVO">
-	<div>
-		<form:input path="username"/>
-	</div>
-	
-		<div class="password">
-		<input type="password" id="password" placeholder="비밀번호를 입력!!">
-	</div>
-	
-		<div>
-		<form:input path="email" placeholder="이메일 입력!!"/>
-	</div>
-	
-		<div>
-		<form:input path="phone" placeholder="전화번호 입력!!"/>
-	</div>
-	
-		<div>
-		<form:input path="address" placeholder="주소 입력!!"/>
-	</div>
-	
-	<div>
-		<button type="button" id="btn_update">수정</button>
-		<button type="submit" id="btn_save" disabled="disabled">저장</button>
-		<button type="button" id="btn_loss_pass">비밀번호찾기</button>
-	</div>
-	
+<section class="body w3-container">
+	<h2 class="w3-center w3-text-amber">MY PAGE</h2>
+	<form:form modelAttribute="userVO">
+		<div class="form-group">
+			<form:input class="form-control" path="username"/>
+		</div>
+		<div class="password form-group">
+			<input class="form-control" type="password" id="password" placeholder="비밀번호를 입력!!">
+		</div>
+		<div class="form-group">
+			<form:input class="form-control" path="email" placeholder="이메일 입력!!"/>
+		</div>
+		<div class="form-group">
+			<form:input class="form-control" path="phone" placeholder="전화번호 입력!!"/>
+		</div>
+		<div class="form-group">
+			<form:input class="form-control" path="address" placeholder="주소 입력!!"/>
+		</div>
+		<section id="btns">
+			<button type="button" id="btn_update" class="btn btn-danger">수정</button>
+			<button type="submit" id="btn_save" disabled="disabled" class="btn btn-primary">저장</button>
+			<button type="button" id="btn_loss_pass" class="btn btn-warning">비밀번호찾기</button>
+		</section>
 	</form:form>
 </section>
 </body>

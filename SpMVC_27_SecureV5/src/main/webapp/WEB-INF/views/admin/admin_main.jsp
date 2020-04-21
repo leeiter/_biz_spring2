@@ -6,49 +6,6 @@
 <html>
 <head>
 <%@ include file="/WEB-INF/views/include/include-head.jspf" %>
-<style>
-#body {
-	position: fixed;
-	top: 60px;
-	left: 0;
-	width: 100%;
-	display: flex;
-}
-
-#body menu {
-	flex: 1;
-	border: 1px solid blue;
-	margin: 5px;
-}
-
-#body menu li {
-	list-style: none;
-}
-
-#body menu li a {
-	display: inline-block;
-	padding: 5px 10px;
-	text-decoration: none;
-	width: 80%;
-	margin-left: 10px;
-	border-bottom: 2px solid transparent;
-	border-top: 2px solid transparent; 
-}
-
-#body menu li a:hover {
-	border-bottom: 2px solid blue;
-	border-top: 2px solid blue;
-	transition: ease 0.3s;
-}
-
-#body article {
-	flex: 3;
-	border: 1px solid blue;
-	margin: 5px;
-}
-
-
-</style>
 
 <script>
 $(function() {
@@ -85,17 +42,99 @@ $(function() {
 		$("div#auth_box").append(auth_input)
 	})	
 
-	
 })
 </script>
+
+<style>
+.body {
+	width: 100%;
+	display: flex;
+}
+
+menu {
+	width: 300px;
+	margin-right: 150px;
+}
+
+menu h3 {
+	font-size: 2.2rem;
+	margin-left: 40px;
+	margin-bottom: 15px;
+}
+
+menu ul {
+	padding: 5px;
+}
+
+menu ul li {
+	list-style: none;
+	color: black;
+	font-size: 1.3rem;
+	padding: 20px;
+	margin: 3px;
+}
+
+menu ul li a {
+	display: block;
+}
+
+menu ul li:hover {
+	background-color: white;
+}
+
+menu ul li a:hover {
+	text-decoration: none;
+	color: black;
+	
+}
+
+
+.body article {
+	flex: 3;
+	border: 1px solid blue;
+	margin-top: 65px;
+	margin-right: 150px;
+}
+
+#body {
+	position: fixed;
+	top: 60px;
+	left: 0;
+
+	
+}
+
+#body menu li a {
+	
+	padding: 5px 10px;
+	text-decoration: none;
+	width: 80%;
+	margin-left: 10px;
+	border-bottom: 2px solid transparent;
+	border-top: 2px solid transparent;
+}
+#body menu li a:hover {
+	border-bottom: 2px solid blue;
+	border-top: 2px solid blue;
+	transition: ease 0.3s;
+}
+
+#body article {
+	flex: 3;
+	border: 1px solid blue;
+	margin: 5px;
+}
+
+</style>
+
 </head>
 <body>
 <%@ include file="/WEB-INF/views/include/include-nav.jspf" %>
 
-<section id="body">
+<section class="body">
 	<menu>
-		<h3>관리자 페이지</h3>
-		<ul>
+		<h3 class="w3-text-amber">관리자 페이지</h3>
+		<ul class="w3-amber">
 			<li><a href="javascript:void(0)" id="user_list">User List</a></li>
 			<li><a href="#">메뉴 1</a></li>
 			<li><a href="#">메뉴 2</a></li>
@@ -105,6 +144,5 @@ $(function() {
 	
 	</article>
 </section>
-
 </body>
 </html>

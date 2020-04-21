@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,9 +23,12 @@ import com.biz.sec.persistence.AuthoritiesDao;
 import com.biz.sec.persistence.UserDao;
 import com.biz.sec.utils.PbeEncryptor;
 
-//classdp @AutoWired Annotaion을 붙인것과 같은 역할
+import lombok.extern.slf4j.Slf4j;
+
+// class에 @AutoWired Annotaion을 붙인것과 같은 역할
 //2020-04-14 생성자를 별도로 만드려고 required~~ 주석처리
 //@RequiredArgsConstructor
+@Slf4j
 @Service
 public class UserService {
 	
@@ -79,8 +83,8 @@ public class UserService {
 	 * 회원가입을 신청하면 비밀번호는 암호화하고
 	 * 아이디와 비밀번호를 DB insert 수행
 	 * 
-	 * @update 2020-04-10
-	 * Map<String, String> 구조의 VO 데이터를
+	 * 2020-04-10
+	 * Map 구조의 VO 데이터를
 	 * UserVO로 변경
 	 */
 	@Transactional
@@ -287,6 +291,79 @@ public class UserService {
 		return false;
 		// TODO Auto-generated method stub
 		
+	}
+
+
+
+
+
+	/**
+	 * @since 2020-04-21
+	 * 회원 정보를 받아서 DB에 저장하고
+	 * 회원정보를 활성화 할수 있도록 하기 위해
+	 * 인증정보를 생성한 후
+	 * controller return
+	 * 
+	 * 
+	 * 
+	 * @param userVO
+	 * @return
+	 */
+	public String insert_getToken(UserDetailsVO userVO) {
+		// DB에 저장
+		userVO.setEnabled(false);
+		
+		String encPassword = passwordEncoder.encode(userVO.getPassword());
+		userVO.setPassword(encPassword);
+		userDao.insert(userVO);
+		
+		// UUID : dsfsdf-sdfsdf-sdfsdf..
+		String email_token = UUID.randomUUID().toString().split("-")[0].toUpperCase();
+		/*
+		email_token = UUID.randomUUID().toString();
+		String[] _t = email_token.split("-");
+		email_token = _t[0];
+		email_token = email_token.toUpperCase();
+		*/
+		
+		log.debug("EMAIL-TOKEN : " + email_token);
+		// 암호화
+		String enc_email_token = PbeEncryptor.getEncrypt(email_token);
+		
+		// Email 보내기
+		mailService.email_auth(userVO, email_token);
+		// TODO Auto-generated method stub
+		return enc_email_token;
+	}
+
+
+
+
+
+	public boolean email_token_ok(String username, String secret_key, String secret_value) {
+		
+		boolean bKey = PbeEncryptor.getDecrypt(secret_key).equals(secret_value);
+		
+		if(bKey) {
+			
+			String strUserName = PbeEncryptor.getDecrypt(username);
+			UserDetailsVO userVO = userDao.findByUserName(strUserName);
+			
+			userVO.setEnabled(true);
+			userDao.update(userVO);
+			authDao.delete(userVO.getUsername());
+			
+			List<AuthorityVO> authList = new ArrayList();
+			authList.add(AuthorityVO.builder().username(userVO.getUsername()).authority("ROLE_USER").build());
+			authList.add(AuthorityVO.builder().username(userVO.getUsername()).authority("USER").build());
+			authDao.insert(authList);
+		}
+		// TODO Auto-generated method stub
+				
+
+				
+				
+		return bKey;
 	}
 
 

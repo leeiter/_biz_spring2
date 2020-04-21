@@ -260,6 +260,27 @@
 					<mainClass>org.test.int1.Main</mainClass>
 				</configuration>
 			</plugin>
+			<plugin>
+				<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-javadoc-plugin -->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.2.0</version>
+				<executions>
+					<execution>
+						<id>javadoc-jar</id>
+						<phase>package</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+						<configuration>
+							<includeDependencySources>true</includeDependencySources>
+							<dependencySourceExcludes>
+								<dependencySourceExclude>commons-cli:*</dependencySourceExclude>
+							</dependencySourceExcludes>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 </project>

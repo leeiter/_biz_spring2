@@ -9,7 +9,6 @@
 <head>
 <%@ include file="/WEB-INF/views/include/include-head.jspf" %>
 
-
 <script>
 $(function() {
 	
@@ -64,7 +63,7 @@ $(function() {
 			success : function(result) {
 				if(result == "EXISTS") {
 					$("#m_username").text("이미 가입된 사용자 이름입니다.")
-					$("#m_username").css("color", "red")
+					// $("#m_username").css("color", "red")
 					$("#username").focus()
 					return false
 				} else {
@@ -101,47 +100,75 @@ $(function() {
 		})
 	})
 	
-	
-	
 })
 </script>
 
+<style>
+.body {
+	width: 23%;
+	margin: 0 auto;
+}
+
+h2 {
+	font-size: 4.5rem;
+	margin-top: 70px;
+	margin-bottom: 15px;
+}
+
+#m_username {
+	display: block;
+	margin-bottom: 10px;
+}
+
+.option {
+	width: 35%;
+	margin: 0 auto;
+}
+
+span {
+	display: inline-block;
+	margin-left: 10px;
+}
+
+button.btn {
+	display: block;
+	width: 100%;
+	margin-bottom: 10px;
+}
+
+#btn-join {
+	margin-top: 10px; 
+}
+</style>
 </head>
 <%@ include file="/WEB-INF/views/include/include-nav.jspf" %>
-
-<body class="bg-dark" class="container-fluid">
-    <div class="container" id="join">
-        <div class="row justify-content-center">
-        	<div class="col-lg-8">
-          		<div class="join">
-            		<h2>JOIN</h2>
-		            <form:form method="POST" modelAttribute="userVO" action="${rootPath}/join/user">
-		            	<div class="form-group">
-		                	<form:input type="text" class="form-control" path="username" placeholder="User ID" />
-						</div>
-						<div class="message" id="m_username"></div>
-		                <div class="form-group">
-		                	<form:input type="password" class="form-control view_pass" path="password" placeholder="password" />
-		                </div>
-		               	<div class="form-group">
-		                	<input type="password" class="form-control view_pass" id="re_password" name="re_password" placeholder="re_password">
-		                </div>
-		                
-		                <div class="option">
-    	<label for="view_pass">
-    		<input type="checkbox" id="view_pass">비밀번호 보이기
-		</label>
-    </div>
-    <br/>
-		                		          		
-		                <br>
-		                <button type="button" id="btn-join" class="btn btn-lg btn-block btn-primary">JOIN</button>
-		                <br>
-		                <button type="button" id="btn-loss" class="btn btn-lg btn-block btn-warning">ID/Password Search</button>
-		        	</form:form>
-          		</div>
-        	</div>
-    	</div>
-    </div>
+<body>
+<section class="body w3-container">
+	<h2 class="w3-center w3-text-amber">JOIN</h2>
+	<br/>
+	<form:form method="POST" modelAttribute="userVO" action="${rootPath}/join/join_next">
+		<div class="form-group">
+		   	<form:input class="form-control" type="text" path="username" placeholder="User ID" />
+		</div>
+		<div class="message w3-text-pink w3-center" id="m_username"></div>
+        <div class="form-group">
+        	<form:input type="password" class="form-control view_pass" path="password" placeholder="password" />
+        </div>
+        <div class="form-group">
+        	<input type="password" class="form-control view_pass" id="re_password" name="re_password" placeholder="re_password">
+        </div>
+        
+   		<div class="option">
+  			<label for="view_pass">
+  				<input type="checkbox" id="view_pass"><span>비밀번호 보이기</span>
+			</label>
+  		</div>
+  		
+  		<section id="btns">
+  			<button type="button" id="btn-join" class="btn btn-primary">JOIN</button>
+  			<button type="button" id="btn-loss" class="btn btn-warning">ID/Password Search</button>
+  		</section>
+	</form:form>
+</section>
 </body>
 </html>

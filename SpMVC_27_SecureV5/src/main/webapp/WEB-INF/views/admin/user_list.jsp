@@ -10,6 +10,9 @@
 	tr.tr_user {
 		cursor: pointer;
 	}
+	th {
+		color: white;
+	}
 	
 	th, td {
 		white-space: nowrap;
@@ -17,8 +20,8 @@
 	}
 </style>
 
-<table>
-	<tr>
+<table class="w3-table-all w3-centered">
+	<tr class="w3-amber">
 		<th>NO</th>
 		<th>USERNAME</th>
 		<th>EMAIL</th>

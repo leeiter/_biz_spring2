@@ -6,6 +6,7 @@ import java.net.URLEncoder;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import javax.security.auth.Subject;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -119,6 +120,39 @@ public class MailSendService {
 		
 		// TODO Auto-generated method stub
 		return send_message;
+	}
+
+		/**
+		 * 
+		 * @param userVO
+		 * @param email_token
+		 */
+	public void email_auth(UserDetailsVO userVO, String email_token) {
+		StringBuilder email_content = new StringBuilder();
+		email_content.append("<style>");
+		email_content.append(".biz-token { ");
+		
+		email_content.append("border : 1px solid blue;");
+		email_content.append("background-color : green;");
+		email_content.append("color : white;");
+		
+		email_content.append("fornt-weight : bold;");
+				
+		email_content.append(" }");
+		email_content.append("</style>");
+		
+		email_content.append("<h2>회원가입을 환영합니다.</h2>");
+		email_content.append("<p>다음 인증코드를 회원가입 인증코드란에 입력...</p>");
+		
+		email_content.append("<div class='biz-token'>");
+		email_content.append(email_token);
+		email_content.append("</div>");
+		// TODO Auto-generated method stub
+		
+		String subject = "봄나라 회원 인증 코드";
+		
+		
+		this.sendMail(userVO.getEmail(), subject, email_content.toString());
 	}
 	
 }

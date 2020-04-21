@@ -18,7 +18,7 @@ import lombok.ToString;
  * 
  * UserDetails 이라는 interface를 implements 하여 작성한다.
  * 
- * @update 2020-04-10
+ * 2020-04-10
  * User 클래스를 상속받아 만든 UserVO를
  * UserDetails 인터페이스를 implements한 UserDetailsVO로 변경
  * 
