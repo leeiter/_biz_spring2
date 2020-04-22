@@ -125,7 +125,7 @@ h2 {
 	margin: 0 auto;
 }
 
-span {
+p {
 	display: inline-block;
 	margin-left: 10px;
 }
@@ -160,7 +160,7 @@ button.btn {
         
    		<div class="option">
   			<label for="view_pass">
-  				<input type="checkbox" id="view_pass"><span>비밀번호 보이기</span>
+  				<input type="checkbox" id="view_pass"><p>비밀번호 보이기</p>
 			</label>
   		</div>
   		
@@ -170,5 +170,6 @@ button.btn {
   		</section>
 	</form:form>
 </section>
+<%@ include file="/WEB-INF/views/include/include-footer.jspf" %>
 </body>
 </html>

@@ -113,7 +113,75 @@
 
 * sessionAttributes는 보통 vo 객체를 서버 메모리에 저장한 후 form화면과 연동하는 구현으로 이때 반드시 ModelAttribute가 동반되어 구현되어야 한다.
 
-* sessionAttributes에 등록된 ModelAttribute vo 객체는 서버 메모리에 데이터를 보관하고 있다가 form:form를 통해서 서버로 전달되는 param vo 객체를 받고, form:form에서 누락된 input 항목들이 있으면 메모리에 보관된 ModelAttribute vo에서 param vo 데이터를 완성하여 사용할 수 있도록 >>>>>>>>>>>>>>>>>>>
+* sessionAttributes에 등록된 ModelAttribute vo 객체는 서버 메모리에 데이터를 보관하고 있다가 form:form를 통해서 서버로 전달되는 param vo 객체를 받고, form:form에서 누락된 input 항목들이 있으면 메모리에 보관된 ModelAttribute vo에서 param vo 데이터를 완성하여 사용할 수 있도록 만들어준다.
+
+## 트렌젝션 : transactional
+* mybatis와 common-dbcp 환경에서는 context.xml에 <tx:annotation-driven/> 설정을 통해서 자동으로 transaction을 구현할 수 있다.
+
+* mybatis 환경에서 실제 dao interface와 mapper.xml 등을 연동하여 DB와 query를 주고 받을 때는 SqlSessionTemplete라는 클래스를 통해서 사용한다.
+
+* DataSourceTransactionManager를 context.xml에 설정을 하게 되면 SqlSessionTemplete를 사용하지 않아도 내부적으로 자체 처리가 된다.
+
+* DataSourceTransactionManager가 SqlSessionTemplete 역할을 대신 수행하기도 한다.
+
+* 여기에서 <tx:annotation-driven/> 항목이 없고, class나 method에서 @Transactional 설정이 없으면 DataSourceTrans...은 SqlSessionTemp...과 같은 역할만 수행한다.
+
+* 혹시 <tx:annotation-driven/>을 설정했는데 @Transactional 설정된 method에서 transaction이 적용이 안 될때가 있는데 이때는 <tx:annotation-driven/> 코드 위쪽에  <context:annotation-config/>을 설정해 주어야 한다.
+
+* @Transactional에는 특별히 세세하게 설정할 수 있는 옵션들이 있다.
+
+### Transactional의 옵션
+
+#### isolation
+* 현재 transaction이 작동되는 과정에서 다른 transaction 등이 접근하는 정도를 설정하기
+
+* READ_UNCMMITTED : level 0
+- 트랜젝션 처리 중 또는 COMMIT이 완료되기 전에 다른 트랜잭션이 일기를 수행할 수 있다.
+- EX) 은행 송금 업무
+
+* READ_COMMITED : level 1
+- 트랜젝션이 COMMIT 된 이후에만 다른 트렌젝션이 읽을 수 있다.
+
+* REPEATABLE_READ : level 2
+- 트랜젝션이 진행되는 동안에 SELECT 문장이 사용된 TABLE에 Lock을 걸기, SELECT가 실행되거나 실행될 예정이 DB(Table) CUD를 수행할 수 없도록하며 단, 다른 트랜젝션에서 제한적으로 SELECT가 가능하다.
+
+- 다수의 트랜젝션이 SELECT를 수행할 떄 일관된 무결성 있는 데이터를 가져갈 수 있도록 보장
+
+* SELIALZABLE : level 3
+- 완벽한 일관성 있는 SELECT를 보장
+
+
+#### propagation :  전파옵션
+* 현재 트렌잭션이 시작되었음을 다른 트랜젝션에 어떻게 알릴 것인가
+
+* REQUIRED
+- 부모 트렌젝션이 실행되는 과정에서 또 자식(세부적인) 트렌잭션을 실행할 수 있도록 허용
+- 이미 자식 트렌젝션이 실행되고 있으면 새로 생성 금지
+
+* REQUIRE_NEW
+- REQUIRED와 비슷하지만 자식 트렌젝션이 이미 실행되고 있지만 무조건 새로 다시 생성하라
+
+### readonly
+* 해당 트렌젝션을 읽기 전용으로 설정하겠다. 기본값은 false
+
+### rollbackFor
+* rollback 조건을 무엇으로 하겠느냐. 특별히 어떤 예외가 발생했을 때만 rollback이 되도록 설정할 때 추가, 기본값은 Exception.class
+
+### noRollbackFor
+* rollbackFor와 반대되는 개념, 특별한 예외에서는 rollback을 무시하라. 기본값 null
+
+### timeout
+* DB와 연결하여, transaction이 실행되는 시간이 과도하게 진행될 경우 rollback을 수행하도록 설정. 기본값 -1, timeout rollback 금지
+
+### List INSERT  수행할 때 주의 사항 !!!
+* 서비스 코드에서 다음과 같은 코드 절대 사용 금지
+	for(DataVO vo : dataList) {
+		dao.insert(vo)
+	}
+
+
+
+
 
 
 

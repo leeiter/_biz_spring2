@@ -66,5 +66,6 @@ button.btn {
 	    </section>
 	</form:form>
 </section>
+<%@ include file="/WEB-INF/views/include/include-footer.jspf" %>
 </body>
 </html>

@@ -1,0 +1,14 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<style>
+span {
+	font-size: 1.3rem;
+	display: block;
+	color: white;
+	margin: 20px 0;
+}
+</style>
+
+<div class="w3-bar w3-bottom w3-amber w3-center w3-opacity-min footer"><span>iterlees@gmail.com</span></div>

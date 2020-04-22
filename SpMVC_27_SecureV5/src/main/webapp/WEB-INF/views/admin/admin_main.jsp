@@ -35,7 +35,7 @@ $(function() {
 	
 	$(document).on("click", "#auth_append", function() {
 		
-		let auth_input = $("<input/>", {class : "auth", name : "auth"})
+		let auth_input = $("<input/>", {class : "form-control auth", name : "auth"})
 		
 		// auth_input.append($("<p/>", {text : '제거', class : "auth_delete"}))
 		
@@ -49,6 +49,7 @@ $(function() {
 .body {
 	width: 100%;
 	display: flex;
+	margin-bottom: 180px;
 }
 
 menu {
@@ -68,14 +69,14 @@ menu ul {
 
 menu ul li {
 	list-style: none;
-	color: black;
-	font-size: 1.3rem;
-	padding: 20px;
-	margin: 3px;
 }
 
 menu ul li a {
 	display: block;
+	color: white;
+	font-size: 1.3rem;
+	padding: 20px;
+	margin: 3px;
 }
 
 menu ul li:hover {
@@ -88,41 +89,10 @@ menu ul li a:hover {
 	
 }
 
-
 .body article {
 	flex: 3;
-	border: 1px solid blue;
 	margin-top: 65px;
 	margin-right: 150px;
-}
-
-#body {
-	position: fixed;
-	top: 60px;
-	left: 0;
-
-	
-}
-
-#body menu li a {
-	
-	padding: 5px 10px;
-	text-decoration: none;
-	width: 80%;
-	margin-left: 10px;
-	border-bottom: 2px solid transparent;
-	border-top: 2px solid transparent;
-}
-#body menu li a:hover {
-	border-bottom: 2px solid blue;
-	border-top: 2px solid blue;
-	transition: ease 0.3s;
-}
-
-#body article {
-	flex: 3;
-	border: 1px solid blue;
-	margin: 5px;
 }
 
 </style>
@@ -144,5 +114,6 @@ menu ul li a:hover {
 	
 	</article>
 </section>
+<%@ include file="/WEB-INF/views/include/include-footer.jspf" %>
 </body>
 </html>

@@ -6,16 +6,6 @@
 <c:set var="rootPath" value="${pageContext.request.contextPath}"/>
 
 <style>
-* {
-	box-sizing: border-box;
-}
-
-body {
-	width: 100%;
-	display: flex;
-	margin: 0 auto;
-}
-
 #navbar {
 	position: fixed;
 	top: 0;

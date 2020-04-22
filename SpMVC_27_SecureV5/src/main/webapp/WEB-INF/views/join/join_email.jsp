@@ -101,5 +101,6 @@ button.btn {
 		</c:choose>
 	</form:form>
 </section>
+<%@ include file="/WEB-INF/views/include/include-footer.jspf" %>
 </body>
 </html>

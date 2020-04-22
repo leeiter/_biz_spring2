@@ -15,6 +15,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.biz.sec.domain.AuthorityVO;
@@ -30,6 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 //@RequiredArgsConstructor
 @Slf4j
 @Service
+//@Transactional 왠만하면 각 method 에 설정해주는 것이 좋다.
 public class UserService {
 	
 	// @Autowired
@@ -111,7 +113,14 @@ public class UserService {
 		return ret;
 	}
 	
-
+	
+	/*
+	 * for()문으로 insert를 반복 실행을 한다고 하면
+	 * 현재 insert method에는 @Transactional이 있기 때문에
+	 * 10번을 한다고 하면 첫번째 COMMIT이 되고 나면 바로 멈춰버린다. 
+	 * 그래서 dao에서 insert가 진행되도록 해야 한다.
+	 * 심하게는 DB연결까지 막아버리는 최악의 상황이 생길 수도 있다.
+	 */
 	/**
 	 * @since 2020-04-20
 	 * @author leeiter
@@ -129,7 +138,7 @@ public class UserService {
 	 * @param userVO
 	 * @return
 	 */
-	@Transactional
+	@Transactional(isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
 	public int insert(UserDetailsVO userVO) {
 		
 		// 회원정보에 저장할 준비가 되지만
@@ -186,6 +195,7 @@ public class UserService {
 		return passwordEncoder.matches(password, userVO.getPassword());
 	}
 	
+	@Transactional
 	public int update(UserDetailsVO userVO, String[] authList) {
 		int ret = userDao.update(userVO);
 		
@@ -221,7 +231,7 @@ public class UserService {
 		oldUserVO.setAddress(userVO.getAddress());
 		
 		
-		int ret = userDao.update(userVO);
+		int ret = userDao.update(oldUserVO);
 		
 		// DB update가 성공하면
 		// 로그인된 session정보를 update 수행
@@ -309,6 +319,7 @@ public class UserService {
 	 * @param userVO
 	 * @return
 	 */
+	@Transactional
 	public String insert_getToken(UserDetailsVO userVO) {
 		// DB에 저장
 		userVO.setEnabled(false);
