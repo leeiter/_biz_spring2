@@ -39,7 +39,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	 * 클래스 생성자를 만들고 생성자에 @Autowired를 붙여서
 	 * 초기화를 해주어야 한다.
 	 */
-	
 	private final AuthoritiesDao authDao;
 	private final UserDao userDao;
 
@@ -49,55 +48,31 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	 */
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		
-		/*
 		// DB로 부터 사용자 정보 가져오기
-//		UserVO userVO = userDao.findByUserName(username);
-		
-		// Spring security가 사용할 DetailVO 선언
-				// 2020-04-14 직접 DB로부터 정보를 가져올 수 있도록 update
-//				UserDetailsVO userDetails = userDao.findByUserName(username);
+		// UserVO userVO = userDao.findByUserName(username);
 		
 		// spring security가 사용할 DetailVO 선언
-		UserDetailsVO userDetails = new UserDetailsVO();
+		UserDetailsVO userVO = userDao.findByUserName(username);
+		if(userVO == null) {
+			throw new UsernameNotFoundException("User Name이 없습니다.");
+		}
 		
-//		userDetails.setUsername(userVO.getUsername());
-//		userDetails.setPassword(userVO.getPassword());
-		userDetails.setEnabled(true);
+		// userDetails.setUsername(userVO.getUsername());
+		// userVO.setPassword(userVO.getPassword());
+		
+		// userVO.setEnabled(true);
 		
 		// 사용자 정보를 사용할 수 있는가 아닌가를 세밀하게
 		// 제어하기 위한 칼럼
-		userDetails.setAccountNonExpired(true);
-		userDetails.setAccountNonLocked(true);
-		userDetails.setCredentialsNonExpired(true);
+		userVO.setAccountNonExpired(true);
+		userVO.setAccountNonLocked(true);
+		userVO.setCredentialsNonExpired(true);
 		
-		userDetails.setAuthorities(this.getAuthorities(username));
-		*/
+		userVO.setAuthorities(this.getAuthorities(username));
 		
-		// DB로부터 사용자 정보 가져오기
-				// UserVO userVO = userDao.findByUserName(username);
-				
-				// Spring security가 사용할 DetailVO 선언
-				// 2020-04-14 직접 DB로부터 정보를 가져올 수 있도록 update
-				UserDetailsVO userVO = userDao.findByUserName(username);
-				if(userVO == null) {
-					throw new UsernameNotFoundException("User Name이 없습니다.");
-				}
-				
-//				userDetails.setUsername(userVO.getUsername());
-//				userDetails.setPassword(userVO.getPassword());
-//				userVO.setEnabled(true);
-				
-				// 사용자 정보를 사용할 수 있는가 아닌가를 세밀하게 제어하기 위한 칼럼
-				userVO.setAccountNonExpired(true);
-				userVO.setAccountNonLocked(true);
-				userVO.setCredentialsNonExpired(true);
-				
-				userVO.setAuthorities(this.getAuthorities(username));
-		
-//				userVO.setPhone("010-1111-1234");
-//				userVO.setEmail("iterlees@gmail.com");
-//				userVO.setAddress("광주광역시 북구");
+		// userVO.setPhone("010-1111-1234");
+		// userVO.setEmail("iterlees@gmail.com");
+		// userVO.setAddress("광주광역시 북구");
 		
 		return userVO;
 	}

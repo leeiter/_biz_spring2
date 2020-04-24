@@ -175,29 +175,6 @@
 
 ### List INSERT  수행할 때 주의 사항 !!!
 * 서비스 코드에서 다음과 같은 코드 절대 사용 금지
-	for(DataVO vo : dataList) {
-		dao.insert(vo)
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+for(DataVO vo : dataList) {
+	dao.insert(vo)
+}

@@ -9,7 +9,6 @@ public class PbeEncryptor {
 	private static StandardPBEStringEncryptor pbEnc;
 
 	static {
-		
 		pbEnc = new StandardPBEStringEncryptor();
 		
 		// 암호화를 하기 위한 salt BIZ.COM 환경변수 값을 사용
@@ -17,14 +16,10 @@ public class PbeEncryptor {
 		String strSalt = envList.get("BIZ.COM");
 		pbEnc.setAlgorithm("PBEWithMD5AndDES");
 		pbEnc.setPassword(strSalt);
-		
 	}
 	
 	// 암호화
 	public static String getEncrypt(String plainText) {
-
-		
-		
 		return pbEnc.encrypt(plainText);
 	}
 	

@@ -1,7 +1,5 @@
 package com.biz.sec;
 
-import org.apache.ibatis.io.ResolverUtil.Test;
-
 public class Main_02 {
 	
 	/*
@@ -16,11 +14,9 @@ public class Main_02 {
 	 * int, char, long, double 등등으로 만든 변수는
 	 * method로 전달하여 method 내에서 값을 변경하여도
 	 * 원본은 절대 변경되지 않는다.
-	 *  
 	 */
 	
 	public static void main(String[] args) {
-		/*
 		Test test = new Test();
 		
 		System.out.println(test.addr);
@@ -28,6 +24,9 @@ public class Main_02 {
 		
 		System.out.println(test.addr);
 		
+		int[] num = new int[5];
+		sub(num);
+		System.out.println(num[3]);
 	}
 	
 	public static void sub(int[] num) {
@@ -37,8 +36,11 @@ public class Main_02 {
 	public static void sub(Test t1) {
 		t1.addr = "광주광역시";
 	}
-
-*/
-	}
 	
+}
+
+class Test {
+	String name;
+	String addr;
+	String phone;
 }

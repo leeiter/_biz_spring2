@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Select;
 
 import com.biz.sec.domain.AuthorityVO;
-import com.biz.sec.domain.UserDetailsVO;
 
 public interface AuthoritiesDao {
 

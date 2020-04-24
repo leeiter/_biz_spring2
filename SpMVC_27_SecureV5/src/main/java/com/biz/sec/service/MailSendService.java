@@ -1,12 +1,10 @@
 package com.biz.sec.service;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URL;
 import java.net.URLEncoder;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import javax.security.auth.Subject;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -22,7 +20,6 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class MailSendService {
 
-	
 	private final JavaMailSender javaMailSender;
 	private final String from_email = "tlzmfltsu_05@naver.com";
 	
@@ -32,26 +29,22 @@ public class MailSendService {
 	}
 
 	public void sendMail() {
-		
 		String to_email = "tlzmfltsu_05@naver.com";
-		
 		String subject = "메일보내기 테스트";
 		String content = "반갑습니다.";
-		
 		this.sendMail(to_email, subject, content);
 	}
 	
 	public void sendMail(String to_email, String subject, String content) {
-		
 		MimeMessage message = javaMailSender.createMimeMessage();
 		MimeMessageHelper mHelper;
-		
 		mHelper = new MimeMessageHelper(message, "UTF-8");
 		
 		try {
 			mHelper.setFrom(from_email);
 			mHelper.setTo(to_email);
 			mHelper.setSubject(subject);
+			
 			// true : 메일본문에 html 효과주기
 			mHelper.setText(content, true);
 			javaMailSender.send(message);
@@ -73,9 +66,7 @@ public class MailSendService {
 	 * @throws UnsupportedEncodingException 
 	 */
 	// public boolean join_send(UserDetailsVO userVO) {
-
-		public String join_send(UserDetailsVO userVO) throws UnsupportedEncodingException {
-		
+	public String join_send(UserDetailsVO userVO) throws UnsupportedEncodingException {
 		String userName = userVO.getUsername();
 		String email = userVO.getEmail();
 		String encUserName = PbeEncryptor.getEncrypt(userName);
@@ -104,29 +95,22 @@ public class MailSendService {
 		// email_message.append("<p><a href='" + email_link.toString() + "'>Email 인증</a></p>");
 		email_message.append("<p><a href='%s'>Email 인증</a></p>");
 		email_message.append("<p>링크를 클릭하여 주세요.</p>");
-		
-		
-		
-		
-		
+
 		String send_message = String.format(email_message.toString(), email_link.toString());
 		
-
 		String to_email = email;
 		String subject = "봄나라 회원인증 메일";
 		this.sendMail(to_email, subject,send_message);
-		
-		
-		
-		// TODO Auto-generated method stub
 		return send_message;
 	}
 
-		/**
-		 * 
-		 * @param userVO
-		 * @param email_token
-		 */
+	/**
+	 * @since 2020-04-21
+	 * 이메일 인증을 위한 token정보를 email로 전송하기
+	 *  
+	 * @param userVO
+	 * @param email_token
+	 */
 	public void email_auth(UserDetailsVO userVO, String email_token) {
 		StringBuilder email_content = new StringBuilder();
 		email_content.append("<style>");
@@ -150,8 +134,6 @@ public class MailSendService {
 		// TODO Auto-generated method stub
 		
 		String subject = "봄나라 회원 인증 코드";
-		
-		
 		this.sendMail(userVO.getEmail(), subject, email_content.toString());
 	}
 	

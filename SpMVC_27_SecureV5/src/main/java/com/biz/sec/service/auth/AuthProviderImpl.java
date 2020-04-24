@@ -8,7 +8,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.biz.sec.domain.UserDetailsVO;
@@ -24,7 +23,6 @@ public class AuthProviderImpl implements AuthenticationProvider {
 	 */
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-
 	
 	/**
 	 * spring security에서 커스터마이징을 수행하여
@@ -33,7 +31,6 @@ public class AuthProviderImpl implements AuthenticationProvider {
 	 */
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-		
 		/*
 		 * authentication으로 부터 로그인 폼에서 보낸
 		 * 		username과 password를 추출
@@ -60,9 +57,7 @@ public class AuthProviderImpl implements AuthenticationProvider {
 
 	@Override
 	public boolean supports(Class<?> authentication) {
-		// TODO Auto-generated method stub
 		return true;
 	}
-	
 	
 }

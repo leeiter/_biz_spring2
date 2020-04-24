@@ -1,7 +1,6 @@
 package com.biz.sec.controller;
 
 import java.security.Principal;
-import java.util.List;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -61,109 +60,62 @@ public class UserController {
 	public String password(String password) {
 		boolean ret = userService.check_password(password);
 		if(ret) return "PASS_OK";
-				
-				return "PASS_FAIL";
+		return "PASS_FAIL";
 	}
 	
-	
-	
-
 	@ResponseBody
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String user() {
 		return "user HOME";
 	}
 	
-//	@ResponseBody
 	@RequestMapping(value = "/mypage1", method = RequestMethod.GET)
 	public String mypage(Model model) {
-
 		// 로그인한 사용자 정보
 		UserDetailsVO userVO = (UserDetailsVO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		
 		// 권한(ROLE) 리스트 추출하여 userVO에 setting
 		userVO.setAuthorities(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
 
+		model.addAttribute("userVO", userVO);
+		return "auth/mypage";
+	}
+	
+	// @ResponseBody
+	@RequestMapping(value = "/mypage", method = RequestMethod.GET)
+	public String mypage(Principal principal, Model model) {
+		UsernamePasswordAuthenticationToken upa = (UsernamePasswordAuthenticationToken) principal;	
 		
-		// UserDetailsVO userVO = userService.findById(id);
+		UserDetailsVO userVO = (UserDetailsVO) upa.getPrincipal();
+		userVO.setAuthorities(upa.getAuthorities());
+			
 		model.addAttribute("userVO", userVO);
 		return "auth/mypage";
 		// return userVO;
 	}
 	
-	
-//		@ResponseBody
-		@RequestMapping(value = "/mypage", method = RequestMethod.GET)
-		public String mypage(Principal principal,
-				Model model) {
-
-			UsernamePasswordAuthenticationToken upa = (UsernamePasswordAuthenticationToken) principal;
-			
-			UserDetailsVO userVO = (UserDetailsVO) upa.getPrincipal();
-			
-			userVO.setAuthorities(upa.getAuthorities());
-			
-			// UserDetailsVO userVO = userService.findById(id);
-			model.addAttribute("userVO", userVO);
-			return "auth/mypage";
-			// return userVO;
-		}
+	/*
+	 * mypage에서 저장을 눌렀을때 form에 입력된 데이터가
+	 * userVO에 담겨서 전달되어 온다.
+	 */
+	@RequestMapping(value = "/mypage", method = RequestMethod.POST)
+	public String mypage(UserDetailsVO userVO, Principal principal, Model model) {
+		/*
+		 * Security Session 정보가
+		 * 저장된 메모리에 직접 접근하여
+		 * session user 정보를 수정하는 방법으로
+		 * 코드는 쉬워지나 보안에
+		 *  치명적인 문제를 일으킬 수 있다.
+		 * 
+		 * 이걸 사용하면 UserService에서 확인 작업을 안해도 되지만 
+		 * 보안에 가장 위험함 코드로 쓰지 말아야할 코드
 		
-//		@ResponseBody
-		@RequestMapping(value = "/mypage", method = RequestMethod.POST)
-		public String mypage(UserDetailsVO userVO, Principal principal, String[] auth, Model model) {
-			
-			/*
-			 * Security Session 정보가
-			 *  저장된 메모리에 직접 접근하여
-			 * session user 정보를 수정하는 방법으로
-			 * 코드는 쉬워지나 보안에
-			 *  치명적인 문제를 일으킬 수 있다.
-			 * 
-			 * 이걸 사용하면 UserService에서 확인 작업을 안해도 되지만 
-			 * 보안에 가장 위험함 코드로 쓰지 말아야할 코드
-			 * 
-			
 			UsernamePasswordAuthenticationToken upa = (UsernamePasswordAuthenticationToken) principal;
 			UserDetailsVO oldUserVO = (UserDetailsVO) upa.getPrincipal();
 			oldUserVO.setEmail(userVO.getEmail());
-			 */
-			
-			int ret = userService.update(userVO);
-			return "redirect:/user/mypage";
-		
-		}
-
-		
-		
-
-	
-
-	
-	
-	/*
-	 * 
-	 * 	
-	 * 
-	 * 	@ResponseBody
-	@RequestMapping(value = "/mypage", method = RequestMethod.GET)
-	public UserDetailsVO mypage(Principal principal, Model model) {
-		UserDetailsVO userVO = (UserDetailsVO) principal;
-		model.addAttribute("userVO", userVO);
-		// return "auth/mypage";
-		return userVO;
+		 */
+		int ret = userService.update(userVO);
+		return "redirect:/user/mypage";
 	}
-	
-	// @ResponseBody
-	@RequestMapping(value = "/mypage", method = RequestMethod.GET)
-	public UserDetailsVO mypage(long id, Model model) {
-		
-		UserDetailsVO userVO = userService.findById(id);
-		model.addAttribute("userVO", userVO);
-		// return "user/mypage";
-		return userVO;
-	}
-	
-	*/
 	
 }

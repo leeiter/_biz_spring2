@@ -18,10 +18,9 @@ public class Main_03 {
 		// 		무늬만 List
 		// 이 method로 변경된 List는 추가, 삭제, 내용 변경이 불가
 		// 완전한 List 형으로 변경하기 위해서는
-		// ArrayList, LinkedList 등의 생성자를 사용해서
-		// List로 변경해주는 절차가 필요한다. 
+		// 		ArrayList, LinkedList 등의 생성자를 사용해서
+		// 		List로 변경해주는 절차가 필요한다. 
 		List<Integer> numList = new ArrayList<>(Arrays.asList(num));
-		// TODO Auto-generated method stub
 
 	}
 

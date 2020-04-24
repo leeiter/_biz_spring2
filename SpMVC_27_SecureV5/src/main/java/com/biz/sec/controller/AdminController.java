@@ -29,10 +29,8 @@ public class AdminController {
 	
 	@RequestMapping(value = "user_list", method = RequestMethod.GET)
 	public String user_list(Model model) {
-		
 		List<UserDetailsVO> userList = userService.selectAll();
 		model.addAttribute("userList", userList);
-		
 		return "admin/user_list";
 	}
 	
@@ -45,8 +43,6 @@ public class AdminController {
 	
 	@RequestMapping(value = "/user_detail_view", method = RequestMethod.POST)
 	public String mypage(UserDetailsVO userVO, Principal principal, String[] auth, Model model) {
-		
-		
 		int ret = userService.update(userVO, auth);
 		return "redirect:/admin/user_detail_view/" + userVO.getUsername();
 	}

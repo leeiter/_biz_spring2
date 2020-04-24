@@ -36,14 +36,10 @@ public class HomeController {
 	public String auth(Model model) {
 		return "auth/auth_view";
 	}
-	
-	
-	/*
-	 * HttpServletRequest : 클라이언트가 웹에 요청할 때 모든 정보가 담겨 있다.
-	 */
+
 	/**
 	 * Controller의 method에서
-	 * HtppServletRequest 클래스로 부터 인증(로그인한) 정보를
+	 * HttpServletRequest 클래스로부터 인증(로그인한) 정보를
 	 * 추출하여 세부항목을 보는 방법
 	 * 
 	 * @param id
@@ -54,6 +50,7 @@ public class HomeController {
 	@Secured(value = {"ROLE_ADMIN", "ROLE_USER"})
 	@RequestMapping(value = "/auth/{id}", method = RequestMethod.GET)
 	public Object auth(@PathVariable("id") String id, HttpServletRequest req) {
+		// HttpServletRequest : 클라이언트가 웹에 요청할 때 모든 정보가 담겨 있다.
 		
 		int intId = 0;
 		try {
@@ -100,7 +97,6 @@ public class HomeController {
 		default: // 그외
 			return "Not Found";
 		}
-				
 	}
 	
 }

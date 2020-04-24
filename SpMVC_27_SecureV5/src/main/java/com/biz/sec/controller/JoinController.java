@@ -2,9 +2,7 @@ package com.biz.sec.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,7 +23,6 @@ import lombok.RequiredArgsConstructor;
  * 
  * @since 2020-04-20
  * @author leeiter
- *
  */
 
 @RequiredArgsConstructor
@@ -58,24 +55,19 @@ public class JoinController {
 	}
 	
 	/**
-	 * 
+	 * 회원가입하면 보여주기
+	 * sessionAttributes 활용
+	 * localhost:8080/sec/join : 회원가입 화면 보이기
+	 * join/user : 회원가입 버튼 클릭 후
+	 * join/email_ok : email 인증화면에서 email 보내기 후
 	 *
+	 * @since 2020-04-20
+	 * 
 	 * UPDATE : 2020-04-21
 	 * localhost:8080/sec/join : 회원가입 화면 보이기
 	 * join/join_next : 회원가입 버튼 클릭 후
 	 * 		DB에 회원정보를 보여준 후 email 인증 화면 보이기
-	 * 
 	 * join/join_last : email 인증 후 이후 처리
-	 * 
-	 * @since 2020-04-20
-	 * 회원가입하면 보여주기
-	 * sessionAttributes 활용
-	 * 
-	 * localhost:8080/sec/join : 회원가입 화면 보이기
-	 * join/user : 회원가입 버튼 클릭 후
-	 * join/email_ok : email 인증화면에서 email 보내기 후
-
-	 * 
 	 * 
 	 * @param userVO
 	 * @param model
@@ -87,12 +79,11 @@ public class JoinController {
 		// 대신 jsp 화면에는 form:input 이 꼭 있어야 한다.
 	}
 	
-	
 	/**
 	 * @since 2020-04-21
 	 * 최초 회원가입 화면에서 username과 password를 입력한 후
-	 * 회원가입 버큰을 클릭하면
-	 *  userVO에 데이터를 받아서
+	 * 회원가입 버튼을 클릭하면
+	 * userVO에 데이터를 받아서
 	 * sessionAttributes에 설정된 저장소에 저장해 두고
 	 * email 인증 화면 보여주기
 	 * 
@@ -106,14 +97,14 @@ public class JoinController {
 	
 	/**
 	 * @since 2020-04-21
-	 * email 인증form에서 Email 보내기 버튼을 클릭했을 때
+	 * Email 인증form에서 Email 보내기 버튼을 클릭했을 때
 	 * userVO에 데이터를 받아서(email만)
 	 * 
 	 * sessionAttributes에 저장된 데이터와 통합(merge)하고
 	 * DB에 저장한 후
 	 * 인증 정보를 Email로 보내고
 	 * 인증코드를 입력받는 화면을 다시 보여주기
-	 * 이땐 JOIN 변수에 EMAIL_OK 문자열을 실어서 보내고
+	 * 이땐 JOIN변수에 EMAIL_OK 문자열을 실어서 보내고
 	 * 화면에는 인증 코드 입력하는 란이 보이도록 설정
 	 * 
 	 * @param userVO
@@ -121,11 +112,10 @@ public class JoinController {
 	 */
 	@RequestMapping(value = "/join_last", method = RequestMethod.POST)
 	public String join_last(@ModelAttribute("userVO") UserDetailsVO userVO, Model model) {
-		String email_token = userService.insert_getToken(userVO);
+		// String email_token = userService.insert_getToken(userVO);
 		
 		model.addAttribute("username", PbeEncryptor.getEncrypt(userVO.getUsername()));
-		
-		model.addAttribute("My_Email_Secret", email_token);
+		// model.addAttribute("My_Email_Secret", email_token);
 		model.addAttribute("JOIN", "EMAIL_OK");
 		return "join/join_email";
 	}
@@ -134,22 +124,19 @@ public class JoinController {
 	 * @since 2020-04-21
 	 * 이메일 인증폼에서 인증키와 인증값을 받아서
 	 * 인증처리
+	 * 
 	 * @param secret_key
 	 * @param secret_value
 	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/email_token_check", method = RequestMethod.POST)
-	public String email_token_check(@RequestParam("secret_id") String username, @RequestParam("secret_key") String secret_key, @RequestParam("secret_value") String secret_value) {
-		
-		boolean bKey =  userService.email_token_ok(username, secret_key, secret_value );
-		
-		// boolean bKey = PbeEncryptor.getDecrypt(secret_key).equals(secret_value);
+	public String email_token_check(
+			@RequestParam("secret_id") String username, @RequestParam("secret_key") String secret_key, @RequestParam("secret_value") String secret_value) {		
+		boolean bKey = userService.email_token_ok(username, secret_key, secret_value);
 		if(bKey) return "OK";
 		return "FAIL";
 	}
-	
-	
 
 	/**
 	 * @since 2020-04-20
@@ -165,25 +152,10 @@ public class JoinController {
 		return "join/join_email"; // UserDeatailVO에 담긴 데이터가 담긴다.
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * @since 2020-04-20
 	 * 회원가입에서 username, password 입력후
-	 *  email 보내기 화면으로 이동하기
+	 * email 보내기 화면으로 이동하기
 	 *  
 	 * @param userVO
 	 * @param session
@@ -192,49 +164,35 @@ public class JoinController {
 	 */
 	@RequestMapping(value = "/joinok", method = RequestMethod.POST)
 	public String joinOk(@ModelAttribute("userVO") UserDetailsVO userVO, SessionStatus session, Model model) {
-		
 		int ret = userService.insert(userVO);
-		
-//		String ret = userService.insert(userVO);
-		
 		model.addAttribute("JOIN", "EMAIL_OK");
 		
 		// sessionAttribute에 저장된 session값을 clear 시키기
-//		session.setComplete();
+		// session.setComplete();
 		return "join/join_email"; // 여기서는 userVO가 받는데 이전 두 화면에서 받은 데이터가 들어있다.
-		
-		
-		// return ret; 
-		// return userVO;
 	}
-	
-	
+		
 	/**
 	 * @since 2020-04-20
 	 * 회원가입 중 email 보내기 화면
 	 * email 보내기 후 재 전송화면으로
+	 * 
 	 * @param userVO
 	 * @param session
 	 * @param model
 	 * @return
 	 */
-//	@ResponseBody
 	@RequestMapping(value = "/emailok", method = RequestMethod.GET)
 	public String emailOk(@ModelAttribute("userVO") UserDetailsVO userVO, SessionStatus session, Model model) {
-		
 		boolean ret = userService.emailOk(userVO.getUsername(), userVO.getEmail());
 		
 		session.setComplete();
 		if(ret) {
 			return "redirect:/user/login";
 		} else {
+			// 2020-04-21 추가
 			return "join/join_email_fail";
-		}
-//		return PbeEncryptor.getDecrypt(username) + PbeEncryptor.getDecrypt(email);
-		
+		}		
 	}	
-	
-	
-	
 	
 }
