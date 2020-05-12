@@ -78,14 +78,6 @@
 			<version>${org.jasypt-version}</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>1.18.12</version>
-			<scope>provided</scope>
-		</dependency>
-
 		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
 		<dependency>
 			<groupId>mysql</groupId>
@@ -119,6 +111,14 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-dbcp2</artifactId>
 			<version>2.7.0</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.12</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<!-- AspectJ -->

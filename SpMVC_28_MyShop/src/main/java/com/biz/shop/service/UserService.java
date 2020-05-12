@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.biz.shop.domain.AuthVO;
 import com.biz.shop.domain.UserVO;
 import com.biz.shop.persistence.AuthDao;
 import com.biz.shop.persistence.UserDao;
@@ -37,6 +38,10 @@ public class UserService {
 		String encPassword = passwordEncoder.encode(userVO.getPassword());
 		userVO.setPassword(encPassword);
 		
+		List<AuthVO> authList = new ArrayList<>();
+		authList.add(AuthVO.builder().username(userVO.getUsername()).authority("ROLE_USER").build());
+		authDao.insert(authList);
+		
 		int ret = userDao.insert(userVO);
 		return ret;
 	}
@@ -55,6 +60,7 @@ public class UserService {
 		UserVO userVO = userDao.findById(id);
 		return userVO;
 	}
+	
 	
 	public boolean check_password(String password) {
 		UserVO userVO = (UserVO) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

@@ -5,14 +5,24 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.biz</groupId>
 	<artifactId>shop</artifactId>
-	<name>SpMVC_28_MyShop</name>
+	<name>SpMVC_29_MyShop</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
+		<!--
+			web.xml을 사용하지 않겠다라는 선언
+			3.x 이상에서 사용 가능
+			
+			Boot로 가기 전 단계 프로젝트에서 많이 사용한다.
+		-->
+		<failOnMissingWebXml>false</failOnMissingWebXml>
+		
 		<java-version>1.8</java-version>
 		<org.springframework-version>5.2.5.RELEASE</org.springframework-version>
+
 		<org.spring-security-version>5.2.3.RELEASE</org.spring-security-version>
 		<org.jasypt-version>1.9.3</org.jasypt-version>
+
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.7.30</org.slf4j-version>
 	</properties>
@@ -33,6 +43,13 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
 
@@ -150,22 +167,18 @@
 		</dependency>
 
 		<!-- Servlet -->
-		<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>4.0.1</version>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
 			<scope>provided</scope>
 		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/javax.servlet.jsp/javax.servlet.jsp-api -->
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>
-			<artifactId>javax.servlet.jsp-api</artifactId>
-			<version>2.3.3</version>
+			<artifactId>jsp-api</artifactId>
+			<version>2.1</version>
 			<scope>provided</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>

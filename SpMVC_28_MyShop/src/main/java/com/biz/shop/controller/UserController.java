@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.biz.shop.domain.UserVO;
 import com.biz.shop.service.UserService;
@@ -25,6 +26,7 @@ public class UserController {
 		return "user/login";
 	}
 	
+	@ResponseBody
 	@RequestMapping(value = "/idcheck", method = RequestMethod.GET)
 	public String idCheck(String username) {
 		boolean ret = userService.isExistsUserName(username);
@@ -34,6 +36,7 @@ public class UserController {
 		return "NonExists".toUpperCase(); // NONEXISTS
 	}
 	
+	@ResponseBody
 	@RequestMapping(value = "/password", method = RequestMethod.POST)
 	public String password(String password) {
 		boolean ret = userService.check_password(password);
