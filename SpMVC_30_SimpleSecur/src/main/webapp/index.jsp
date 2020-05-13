@@ -15,5 +15,7 @@
 	<button type="submit">logout</button>
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 </form>
+<br>
+<p>이 페이지는 spring, views 폴더와 controller가 없는 순수 spring 코드 입니다.</p>
 </body>
 </html>
