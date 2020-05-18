@@ -6,6 +6,10 @@ import org.jasypt.encryption.pbe.config.EnvironmentStringPBEConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import lombok.extern.slf4j.Slf4j;
+
+
+@Slf4j
 // project 시작할 때 처음으로 확인
 @Configuration
 public class JasyptConfig {
@@ -19,6 +23,7 @@ public class JasyptConfig {
 		EnvironmentStringPBEConfig envConfig = new EnvironmentStringPBEConfig();
 		envConfig.setAlgorithm("PBEWithMD5AndDES");
 		envConfig.setPasswordEnvName("BIZ.COM");
+		log.debug("JAST SALT: " + envConfig.getPassword());
 		return envConfig;
 	}
 

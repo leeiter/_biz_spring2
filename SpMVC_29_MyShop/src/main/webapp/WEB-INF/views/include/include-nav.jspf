@@ -1,0 +1,105 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<c:set var="rootPath" value="${pageContext.request.contextPath}"/>
+
+<style>
+#navbar {
+	position: fixed;
+	top: 0;
+	width: 100%;
+	display: flex;
+	transition: top 0.3s;
+}
+
+#navbar a {
+	flex: 0 1 auto;
+	display: block;
+	text-align: center;
+	padding: 1rem;
+	text-decoration: none;
+	font-size: 1.2rem;
+}
+
+#navbar a:hover {
+	background-color: black;
+	color: white;
+}
+
+a:nth-child(2) {
+	width: 180px;
+	margin-left: auto;
+	display: block;
+
+}
+
+a:nth-child(3), a:nth-child(4) {
+	width: 180px;
+}
+
+section.body {
+	position: relative;
+	top: 100px;
+}
+</style>
+<script>
+$(function() {
+	
+	var preScrollpos = $(window).scrollTop()
+	$(window).scroll(function() {
+		
+		let currentScrollpos = $(window).scrollTop()
+		if(preScrollpos > currentScrollpos) {
+			$("#navbar").css("top", 0)
+		} else {
+			$("#navbar").css("top", "-60px")
+		}
+		
+		preScrollpos = currentScrollpos
+		
+	})
+	
+	/*
+	$(document).on("click", "a.logout", function() {
+		
+		if(confirm("로그아웃 할까요?")) {
+			$.post("${rootPath}/logout", {${_csrf.parameterName} : "${_csrf.token}"}, function(result) {
+				document.location.replace("${rootPath}/")
+			}
+				
+			})
+		}
+		
+	})
+	*/
+	
+	$(document).on("click", "a.logout", function() {
+		
+		if(confirm("로그아웃할까요?")) {
+			$.post("${rootPath}/logout",
+				{${_csrf.parameterName} : "${_csrf.token}"},
+				function(result) {
+					document.location.replace("${rootPath}/")
+				}
+			)
+		}
+		
+	})
+	
+})
+</script>
+
+<nav id="navbar" class="w3-amber w3-text-sand">
+	<a href="${rootPath}/">Home</a>
+	
+	<sec:authorize access="isAnonymous()">
+		<a href="${rootPath}/user/login">로그인</a>
+	</sec:authorize>
+
+	<sec:authorize access="isAuthenticated()">
+		<a href="${rootPath}/user/mypage">My Page</a>
+		<a href="javascript:void(0)" class="logout">로그아웃</a>
+	</sec:authorize>
+</nav>
