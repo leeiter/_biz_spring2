@@ -64,6 +64,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		web.ignoring().antMatchers("/resources/**");
 	}
 	
+	/*
+	 * 암호화된 password를 비교(match)하기 위한 클래스 생성
+	 * Authen..Provider에 주입되는 객체
+	 * 
+	 * 사용자 암호를 
+	 */
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();

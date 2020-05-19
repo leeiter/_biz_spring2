@@ -102,4 +102,8 @@ $(function() {
 		<a href="${rootPath}/user/mypage">My Page</a>
 		<a href="javascript:void(0)" class="logout">로그아웃</a>
 	</sec:authorize>
+	
+	<sec:authorize access="hasRole('ADMIN')">
+		<a href="${rootPath}/admin">관리자 홈</a>
+	</sec:authorize>
 </nav>
