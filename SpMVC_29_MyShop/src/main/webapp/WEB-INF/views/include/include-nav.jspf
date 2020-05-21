@@ -92,7 +92,7 @@ $(function() {
 </script>
 
 <nav id="navbar" class="w3-amber w3-text-sand">
-	<a href="${rootPath}/">Home</a>
+	<a href="#">SPRING SHOP</a>
 	
 	<sec:authorize access="isAnonymous()">
 		<a href="${rootPath}/user/login">로그인</a>

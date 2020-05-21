@@ -23,7 +23,7 @@ public interface ProductDao {
 	public List<ProductVO> selectAll();
 
 	@Select("SELECT * FROM tbl_product WHERE p_code = #{p_code}")
-	public void findByPCode(String p_code);
+	public ProductVO findByPCode(String p_code);
 
 	// mysql 중간문자열 검색하기
 	@Select("SELECT * FROM tbl_product WHERE p_name Like CONCAT('%', #{p_name}, '%')")

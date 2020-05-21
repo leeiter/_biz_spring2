@@ -9,15 +9,15 @@ import com.biz.shop.domain.ProductVO;
  */
 public interface ProductService {
 	
-	public void insert(ProductVO productVO);
+	public int insert(ProductVO productVO);
 	
 	public List<ProductVO> selectAll();
 		
-	public void findByPCode(String p_code);
+	public ProductVO findByPCode(String p_code);
 	
 	public List<ProductVO> findByPName(String p_name);
 	
-	public void update(ProductVO productVO);
-	public void delete(String p_code);
+	public int update(ProductVO productVO);
+	public int delete(String p_code);
 	
 }

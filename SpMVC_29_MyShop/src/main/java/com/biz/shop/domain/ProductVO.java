@@ -27,4 +27,6 @@ public class ProductVO {
 	private boolean p_vat; // 과세여부 true : 과세, false : 면세
 	
 	private String p_file; // 상품의 대표 이미지
+	
+	
 }

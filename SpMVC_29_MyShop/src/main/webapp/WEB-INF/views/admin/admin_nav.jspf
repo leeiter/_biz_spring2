@@ -1,0 +1,35 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:set var="rootPath" value="${pageContext.request.contextPath}" />
+
+<style>
+/*
+	hover에 border-bottom 을 설정했을 경우
+	화면이 출렁거리는 현상을 방지하기 위해
+	미리 투명한 border-bottom을 설정해둔다.
+*/
+li.nav-item {
+	border-bottom: 2px solid transparent;
+}
+
+li.nav-item:hover {
+	background-color: blue;
+	border-bottom: 2px solid red;
+}
+
+li.nav-item:hover a {
+	color: white;
+	font-weight: bold;
+}
+</style>
+
+<nav class="container p-3">
+	<ul class="nav flex-column nav-pills">
+		<li class="nav-item"><a class="nav-link active" href="Javascript:void(0)"><b>관리자홈</b></a></li>
+		<li class="nav-item"><a class="nav-link" href="${rootPath}/product">상품정보관리</a></li>
+		<li class="nav-item"><a class="nav-link" href="#">고객정보관리</a></li>
+		<li class="nav-item"><a class="nav-link" href="#">주문관리</a></li>
+		<li class="nav-item"><a class="nav-link" href="#">회계관리</a></li>
+	</ul>
+</nav>

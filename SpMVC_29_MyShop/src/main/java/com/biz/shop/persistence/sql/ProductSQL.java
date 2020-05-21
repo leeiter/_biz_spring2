@@ -18,10 +18,10 @@ public class ProductSQL {
 		.INTO_VALUES("#{p_iprice}, #{p_oprice}")
 
 		.INTO_COLUMNS("p_vat")
-		.INTO_VALUES("#{p_vat}}")
+		.INTO_VALUES("#{p_vat}")
 
 		.INTO_COLUMNS("p_file")
-		.INTO_VALUES("#{p_file}}");
+		.INTO_VALUES("#{p_file}");
 		
 		return sql.toString();
 		

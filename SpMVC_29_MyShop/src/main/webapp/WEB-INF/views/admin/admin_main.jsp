@@ -8,17 +8,28 @@
 <%@ include file="/WEB-INF/views/include/include-head.jspf" %>
 
 <style>
-h2 {
-	font-size: 5.5rem;
-	margin: 300px 0;
+section.body {
+	display: flex;
 }
+article {
+	border: 1px solid; blue;
+	height: 500px;
+}
+
+article.menu {
+	flex-basis: 300px;
+}
+
 </style>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/include/include-nav.jspf" %>
 
-<section class="body">
-	<h2 class="w3-center w3-text-amber">My Security Project</h2>
+<section class="container-fluid body p-2">
+	<article class="container menu m-2">
+		<%@ include file="/WEB-INF/views/admin/admin_nav.jspf" %>
+	</article>
+	<article class="container-fluid content m-2"></article>
 </section>
 
 <%@ include file="/WEB-INF/views/include/include-footer.jspf" %>
