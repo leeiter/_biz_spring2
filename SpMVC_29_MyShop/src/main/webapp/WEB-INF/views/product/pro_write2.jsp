@@ -68,30 +68,6 @@ $(function() {
 		
 	})
 	
-	
-	$("#ajax_up").click(function() {
-		let formData = new FormData()
-		let file = $("#file")[0].files[0]
-		formData.append("file", file)
-		
-		$.ajax({
-			url : "${rootPath}/file/upload",
-			method : "POST",
-			data : formData,
-			processData : false,
-			contentType : false,
-			beforeSend : function(ax) {
-				ax.setRequestHeader("${_csrf.headerName}", "${_csrf.token}")
-			},
-			success : function(result) {
-				alert(result)
-			},
-			error : function() {
-				alert("서버 통신 오류")
-			}
-		})
-	})
-	
 })
 </script>
 </head>
@@ -122,9 +98,7 @@ $(function() {
 					MultipartFile 매개변수와 이름은 같게 한다.
 				-->
 				<input type="file" id="file"  name="file">
-				<button type="button" id="ajax_up">ajax저장</button>
 			</div>
-			
 			<div class="button-group text-right">
 				<button type="button" class="btn btn-primary save">저장</button>
 				<button type="button" class="btn btn-success">상품정보 목록</button>

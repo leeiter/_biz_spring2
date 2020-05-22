@@ -3,6 +3,7 @@ package com.biz.shop.service.impl;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.biz.shop.domain.ProductVO;
 import com.biz.shop.persistence.DDL_Dao;
@@ -10,15 +11,20 @@ import com.biz.shop.persistence.ProductDao;
 import com.biz.shop.persistence.sql.CreateTableSQL;
 import com.biz.shop.service.ProductService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class ProductServiceImpl implements ProductService {
 
+	private final ProFileServiceImpl proFile;
 	private final ProductDao proDao;
 	private final DDL_Dao ddl_dao;
 	
-	public ProductServiceImpl(ProductDao proDao, DDL_Dao ddl_dao) {
+	public ProductServiceImpl(ProductDao proDao, DDL_Dao ddl_dao, ProFileServiceImpl proFile) {
 		this.proDao = proDao;
 		this.ddl_dao = ddl_dao;
+		this.proFile = proFile;
 		
 		String create_product_table
 				= " CREATE TABLE IF NOT EXISTS tbl_product "
@@ -41,6 +47,15 @@ public class ProductServiceImpl implements ProductService {
 		return proDao.insert(productVO);
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	public int insert(ProductVO productVO, MultipartFile file) {
+		String saveName = proFile.fileUpLoad(file);
+		log.debug("저장파일이름 : " + saveName);
+		productVO.setP_file(saveName);
+		// TODO Auto-generated method stub
+		return proDao.insert(productVO);
 	}
 
 	@Override
@@ -73,5 +88,7 @@ public class ProductServiceImpl implements ProductService {
 		return 0;
 		
 	}
+
+
 
 }

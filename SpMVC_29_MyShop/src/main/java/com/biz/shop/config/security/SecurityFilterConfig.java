@@ -10,5 +10,4 @@ import org.springframework.security.web.context.AbstractSecurityWebApplicationIn
  * 자동으로 security filter로서 동작을 한다.
  */
 public class SecurityFilterConfig extends AbstractSecurityWebApplicationInitializer {
-
 }

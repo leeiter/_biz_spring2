@@ -6,14 +6,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.biz.shop.domain.ProductVO;
 import com.biz.shop.service.ProductService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RequiredArgsConstructor
 @RequestMapping(value = "/product")
 @Controller
@@ -57,8 +63,9 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
-	public String insert(ProductVO productVO) {
-		proService.insert(productVO);
+	public String insert(ProductVO productVO, @RequestParam("file") MultipartFile file) {
+		log.debug("파일이름 : " + file.getOriginalFilename());
+		proService.insert(productVO, file);
 		return "redirect:/product/list";
 	}
 	
@@ -73,8 +80,11 @@ public class ProductController {
 		}
 	}
 	
-	public String detailView(long id) {
-		return "product/detail";
+	@RequestMapping(value = "/detail/{p_code}")
+	public String detailView(ProductVO productVO, @PathVariable(name = "p_code") String p_code, Model model) {
+		productVO = proService.findByPCode(p_code);
+		model.addAttribute("productVO", productVO);
+		return "product/pro_detail";
 	}
 	
 	public String update(long id) {

@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
  * 설정해 두어야 한다.
  */
 @Configuration
-@ComponentScan(basePackages = {"com.biz.shop.auth", "com.biz.shop.service"})
+@ComponentScan(basePackages = {"com.biz.shop.auth", "com.biz.shop.service.security"})
 public class RootConfig {
 
 }

@@ -26,14 +26,22 @@ public class ServletConfig implements WebMvcConfigurer {
 		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
 		registry.addResourceHandler("/files/**").addResourceLocations("/files/");
 		registry.addResourceHandler("/images/**").addResourceLocations("/images/");
+		registry.addResourceHandler("/upload/**").addResourceLocations("file:///bizwork/upload/");
 		WebMvcConfigurer.super.addResourceHandlers(registry);
 	}
 	
+	@Bean(name = "filePath")
+	public String filePath() {
+		return "c:/bizwork/upload";
+	}
+	
 	/*
-	 * fileUpload를 하기 위한 설정 
+	 * fileUpload를 하기 위한 설정
+	 * method 이름 같게 하고 다르면
+	 * @Bean에 이름 설정을 해주어야 한다. 
 	 */
 	@Bean
-	public MultipartResolver multiResolver() {
+	public MultipartResolver multipartResolver() {
 		MultipartResolver mr = new CommonsMultipartResolver();
 		((CommonsMultipartResolver)mr).setMaxUploadSize(1000 * 1000 * 2); // 1개당 2MB
 		((CommonsMultipartResolver)mr).setMaxUploadSizePerFile(1000 * 1000 * 20); // 전체 20MB
