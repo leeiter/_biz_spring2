@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration scan="true" scanPeriod="3 seconds">
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <layout>
+            <pattern>
+                %d{HH:mm:ss.SSS} [%thread] %-5level %logger{32} - %msg%n
+            </pattern>
+        </layout>
+    </appender>
+
+    <logger name="org.springframework" level="INFO" />
+    <logger name="org.mybatis"><level value="INFO"/></logger>
+    <logger name="com.biz.shop.persistence"><level value="DEBUG"/></logger>
+    <logger name="com.biz.shop.controller"><level value="DEBUG"/></logger>
+    <logger name="com.biz.shop.service"><level value="DEBUG"/></logger>
+    
+    <root level="TRACE">
+        <appender-ref ref="console"/>
+    </root>
+</configuration>
