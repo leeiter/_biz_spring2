@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.biz.shop.domain.AuthorityVO;
 import com.biz.shop.domain.UserDetailsVO;
@@ -58,6 +59,7 @@ public class UserDetailsServicerImpl implements UserDetailsService {
 	 * loadUserByUsername() method는 Authen..Provider에서 호출하여
 	 * 로그인한 사용자 정보를 가져간다.
 	 */
+	@Transactional
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserDetailsVO userVO = userDao.findByUserName(username);
@@ -78,6 +80,7 @@ public class UserDetailsServicerImpl implements UserDetailsService {
 	 * authorities 테이블에서 ROLE 정보를 가져와서
 	 * UserDetailsVO와 합성하기 위한 준비를 수행하는 method
 	 */
+	@Transactional
 	private Collection<GrantedAuthority> getAuthorities(String username) {
 		// 1. authorities 테이블에서 username으로 조회한 ROLE List 추출
 		List<AuthorityVO> authList = authDao.findByUserName(username);

@@ -47,6 +47,12 @@ public class CreateTableSQL {
 			+ " o_standard VARCHAR(6) NOT NULL, " // 상품 테이블과 연동
 			+ " o_name VARCHAR(20) NOT NULL ) ";
 	
+	/*
+	 * Transactional 에서는 for() 문을 통해서 insert 하는 것은 최악의 코드이다.
+	 * 그리고 Transactional도 작동이 하지 않는다.
+	 * 그래서 밑에 있는 방법처럼 동적쿼리를 사용해서 하는 것이 괜찮은 코드이고,
+	 * Transaction도 작동이 가능하다.
+	 */
 	public static String insert_options_table 
 	= "INSERT INTO tbl_options ( o_division, o_standard, o_name ) "
 			+ " VALUES ( 'SIZE', 'S', 'Small' ), "

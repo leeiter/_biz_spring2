@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/tx https://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+	<!-- 
+		security와 Transactional 을 동시에 사용을 하려면
+		security는 root에서
+		transactional을 servlet에서 확인들을 하기 때문에
+		사용이 어려운데
+		밑에 있는 코드를 두곳에 각각 생성을 해 놓으면 동시에 사용할 수가 있다.
+		transactional의 자세한 설명은 SpMVC_27_SecureV5 README.md 에서 확인 가능
+	-->
+	<tx:annotation-driven/>
+	
+</beans>

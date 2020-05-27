@@ -9,7 +9,7 @@
     </appender>
 
     <logger name="org.springframework" level="INFO" />
-    <logger name="org.mybatis"><level value="INFO"/></logger>
+    <logger name="org.mybatis"><level value="DEBUG"/></logger>
     <logger name="com.biz.shop.persistence"><level value="DEBUG"/></logger>
     <logger name="com.biz.shop.controller"><level value="DEBUG"/></logger>
     <logger name="com.biz.shop.service"><level value="DEBUG"/></logger>
