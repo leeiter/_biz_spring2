@@ -2,6 +2,7 @@ package com.biz.shop.service.impl;
 
 import java.util.List;
 
+import org.apache.ibatis.executor.ReuseExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,22 +48,53 @@ public class ProOptionsServiceImpl implements ProOptionsService {
 		return proOPTDao.getProSize(proSizeVO);
 	}
 
+
 	@Override
 	public int insert_size(ProSizeVO proSizeVO) {
 		// TODO Auto-generated method stub
 		return proOPTDao.insert_size(proSizeVO);
 	}
 
-	@Override
-	public int insert_color(ProColorVO proColorVO) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	
 
 	@Override
 	public int delete_size(ProSizeVO proSizeVO) {
 		// TODO Auto-generated method stub
 		return proOPTDao.delete_size(proSizeVO);
+	}
+	
+	
+	@Override
+	public Object insert_color(ProColorVO proColorVO) {
+		// TODO Auto-generated method stub
+		
+		int ret = proOPTDao.getProColor(proColorVO);
+		
+		// 이미 DB에 등록이 되어 있으면
+		if(ret > 0) {
+			return "EXISTS";
+		}
+		
+		proOPTDao.insert_color(proColorVO);
+		
+		return proColorVO;
+	}
+
+	@Override
+	public List<ProColorVO> getColorListBySize(String s_seq) {
+		
+		long longSeq = 0;
+		try {
+			longSeq = Long.valueOf(s_seq);
+		} catch (Exception e) {
+			return null;
+			// TODO: handle exception
+		}
+		
+		List<ProColorVO> proColorList = proOPTDao.getColorListBySize(longSeq);
+		
+		// TODO Auto-generated method stub
+		return proColorList;
 	}
 
 

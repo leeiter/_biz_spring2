@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.biz.shop.domain.ProColorVO;
 import com.biz.shop.domain.ProSizeVO;
 import com.biz.shop.domain.ProductVO;
 import com.biz.shop.service.ProOptionsService;
@@ -96,7 +98,11 @@ public class ProductController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/insert_size", method = RequestMethod.POST)
-	public String insert_size(ProSizeVO proSizeVO) {
+	public Object insert_size(ProSizeVO proSizeVO) {
+		/*
+		 * java에서는 object를 사용하는 것이 어렵지만
+		 * javascript를 사용한다면 사용할 수가 있다.
+		 */
 		log.debug("SIZE : " + proSizeVO.getS_size());
 		log.debug("P_CODE : " + proSizeVO.getP_code());
 		
@@ -107,7 +113,7 @@ public class ProductController {
 		
 		proOPTService.insert_size(proSizeVO);
 		// return proSizeVO;
-		return "OK";
+		return proSizeVO;
 	}
 	
 	
@@ -117,6 +123,34 @@ public class ProductController {
 		int ret = proOPTService.delete_size(proSizeVO);
 		return "OK";
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/insert_color", method = RequestMethod.POST)
+	public Object insert_color(ProColorVO proColorVO) {
+		/*
+		 * java에서는 object를 사용하는 것이 어렵지만
+		 * javascript를 사용한다면 사용할 수가 있다.
+		 */
+		log.debug("COLOR : " + proColorVO.getC_color());
+		log.debug("S_SEQ : " + proColorVO.getSize_seq());
+		
+		return proOPTService.insert_color(proColorVO);
+		// return proColorVO;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/get_color_list_by_size", method = RequestMethod.GET)
+	public Object get_color_list_by_size(String s_seq) {
+		List<ProColorVO> proColorList = proOPTService.getColorListBySize(s_seq);
+		
+		if(proColorList == null) {
+			return "FAIL";
+		}
+				
+		return proColorList;
+		
+	}
+	
 	
 	
 	

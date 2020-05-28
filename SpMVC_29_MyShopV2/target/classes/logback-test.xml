@@ -10,7 +10,15 @@
 
     <logger name="org.springframework" level="INFO" />
     <logger name="org.mybatis"><level value="DEBUG"/></logger>
-    <logger name="com.biz.shop.persistence"><level value="DEBUG"/></logger>
+    
+    <!-- 
+    	Dao 클래스가 모여 있는 presistence 패키지의
+    		level을 TRACE로 해두면
+    	SELECT 문이 실행 되었을 때
+    	그 결과를 Console에 log로 보여준다.
+    -->
+    <logger name="com.biz.shop.persistence"><level value="TRACE"/></logger>
+    com.biz.shop.persistence
     <logger name="com.biz.shop.controller"><level value="DEBUG"/></logger>
     <logger name="com.biz.shop.service"><level value="DEBUG"/></logger>
     
